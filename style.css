@@ -9,6 +9,10 @@ font-family: 'VT323', monospace;
     --mobile-margin: 0%;
 }
 
+.electrical-box{
+    transform: translate(3ft);
+}
+
 html{
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -250,12 +254,11 @@ h3:hover pre{
 }
 
 .seekBar::-webkit-slider-thumb {
-    -webkit-appearance: none;
     appearance: none;
 
     border: 1px solid #fff0;
     background-color: #fff1;
-    box-shadow: inset 0 0 20px #fff0, 0 0 10px #fff0, -408px 0 5px 400px #fff1;
+    /*box-shadow: inset 0 0 20px #fff0, 0 0 10px #fff0, -408px 0 5px 400px #fff1;*/
     color: #fff5;
     border-radius: 100px;
     margin: 5px;
@@ -303,7 +306,7 @@ h3:hover pre{
 
     border-radius: 5px;
     border: 1px solid #fff0;
-    backdrop-filter: brightness(1.1);
+    background-color: #ffffff05;
 
     width: 100%;
     height: 100%;
@@ -437,7 +440,7 @@ h3:hover pre{
     .item {
         border-radius: 5px;
         border: 1px solid #fff0;
-        backdrop-filter: brightness(1.1);
+        background-color: #ffffff05;
 
         width: 100%;
         height: 100%;
