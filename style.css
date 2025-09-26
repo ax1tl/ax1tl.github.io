@@ -179,6 +179,18 @@ h3:hover pre{
     align-items: center;
 }
 
+.vol-tag{
+    margin-right: -64px;
+    font-size: 12px;
+    color: #fff5;
+    position: absolute;
+    translate: 5px 8px;
+    z-index: 10;
+}
+#masterVolume{
+    translate: 0px 1px;
+}
+
 .demo-title{
     font-size: 2vw;
 }
@@ -211,8 +223,6 @@ h3:hover pre{
     transition: all 0.5s, box-shadow 1s;
 }
 
-
-
 .seekBar{
     -webkit-appearance: none;
 
@@ -220,7 +230,7 @@ h3:hover pre{
     background-color: #fff2;
     color: #fff5;
     border-radius: 100px;
-    margin: 5px;
+    margin: 0px;
     overflow: hidden;
     transition: all 0.5s, box-shadow 1s;
 }
@@ -232,12 +242,15 @@ h3:hover pre{
 }
 
 .seekBar::-moz-range-thumb {
-    border: 1px solid #fff0;
+    width: 16px;
+    height: 16px;
+
+    border: 0px solid #fff0;
     background-color: #fff3;
     box-shadow: inset 0 0 20px #fff0, 0 0 10px #fff0, -408px 0 5px 400px #fff3;
     color: #fff6;
     border-radius: 100px;
-    margin: 5px;
+    margin: 0px;
     overflow: hidden;
     transition: all 0.5s, box-shadow 1s;
 }
@@ -283,7 +296,7 @@ h3:hover pre{
 
 .demo-description{
     font-size: 1.5vw;
-    color: #fff4;
+    color: #fff5;
 }
 
 .grid {
@@ -308,13 +321,21 @@ h3:hover pre{
     text-align: center;
 
     border-radius: 5px;
-    border: 1px solid #fff0;
+    border: 1px solid #fff1;
     background-color: #ffffff05;
 
     width: 100%;
     height: 100%;
 
     color: #fffa;
+
+    transition: all 1s ease;
+}
+.item:hover {
+    border: 1px solid #fff3;
+    box-shadow: inset 0 0 20px 1px #fff2, 0 0 10px 0 #caf2;
+
+    transition: all 1s ease;
 }
 .item-1 {
     grid-column: 1;
@@ -457,13 +478,21 @@ h3:hover pre{
     }
     .item {
         border-radius: 5px;
-        border: 1px solid #fff0;
+        border: 1px solid #fff1;
         background-color: #ffffff05;
 
         width: 100%;
         height: 100%;
 
         color: #fffa;
+
+        transition: all 0.5s ease;
+    }
+    .item:hover {
+        border: 1px solid #fff2;
+        box-shadow: inset 0 0 20px 1px #fff2, 0 0 10px 0 #caf2;
+
+        transition: all 0.5s ease;
     }
     .item-1 {
         grid-column: 1;
