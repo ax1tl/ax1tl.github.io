@@ -114,16 +114,20 @@ h3{
 h3:hover{
     border: 1px solid #fff3;
     box-shadow: inset 0px 0px 100px #fff1;
-    text-shadow: 0px 0px 10px;
+    text-shadow: 0px 0px 5px #aaf4;
 
     backdrop-filter: blur(15px) brightness(1.4) saturate(130%);
     
     transition: all 0.5s, box-shadow 2s, border 2s;
 }
+h3:hover #important{
+    text-shadow: 0px 0px 5px #fe04;
+    transition: all 0.5s
+}
 
 .description a{
     font-weight: bold;
-    color: #f0a;
+    color: #aaf;
 }
 
 button:hover{
@@ -225,6 +229,7 @@ h3:hover pre{
 
 .seekBar{
     -webkit-appearance: none;
+    appearance: none;
 
     border: 1px solid #fff0;
     background-color: #fff2;
@@ -329,13 +334,13 @@ h3:hover pre{
 
     color: #fffa;
 
-    transition: all 1s ease;
+    transition: all 1s;
 }
 .item:hover {
     border: 1px solid #fff3;
-    box-shadow: inset 0 0 20px 1px #fff2, 0 0 10px 0 #caf2;
+    box-shadow: inset 0 0 20px 1px #fff2, 0 0 10px 0 #aaf2;
 
-    transition: all 1s ease;
+    transition: all 1s;
 }
 .item-1 {
     grid-column: 1;
@@ -490,7 +495,7 @@ h3:hover pre{
     }
     .item:hover {
         border: 1px solid #fff2;
-        box-shadow: inset 0 0 20px 1px #fff2, 0 0 10px 0 #caf2;
+        box-shadow: inset 0 0 20px 1px #fff2, 0 0 10px 0 #aaf2;
 
         transition: all 0.5s ease;
     }
