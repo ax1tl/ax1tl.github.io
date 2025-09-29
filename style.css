@@ -417,6 +417,7 @@ h3:hover pre{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     box-sizing: border-box;
     padding: 2em;
 
