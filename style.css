@@ -86,6 +86,11 @@ h1{
     translate: 0px 5px;
 }
 
+.small{
+    font-size: 10px;
+    color: #fff5;
+}
+
 h3{
     margin: 10px;
 
@@ -400,12 +405,12 @@ h3:hover pre{
     text-align: center;
 }
 .link-title{
-    font-size: 2.25vw;
+    font-size: 3vw;
     text-align: left;
 }
 .link-description{
-    font-size: 1.5vw;
-    color: #fff5;
+    font-size: 1vw;
+    color: #fff4;
 }
 .link-tile {
     display: flex;
@@ -535,7 +540,7 @@ h3:hover pre{
         padding-right: calc(16px + 2%);
         border: 1px solid #fff3;
         box-shadow: inset 0px 0px 100px #fff1;
-        text-shadow: 0px 0px 10px;
+        text-shadow: 0px 0px 5px #aaf4;
 
         backdrop-filter: blur(15px) brightness(1.4) saturate(130%);
 
@@ -555,10 +560,10 @@ h3:hover pre{
         font-size: 24px;
     }
     .link-title{
-        font-size: 18px;
+        font-size: 24px;
     }
     .link-description{
-        font-size: 12px;
+        font-size: 10px;
     }
 }
 
