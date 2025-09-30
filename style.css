@@ -160,34 +160,6 @@ h3:hover pre{
     transition: all 1s;
 }
 
-.badges{
-    margin-top: 15px;
-    margin-bottom: -12px;
-}
-.badges a{
-    color: #0000;
-}
-.badges img{
-    box-shadow: 0px 0px 20px #fff0;
-    border-radius: 2px;
-    margin-right: 7px;
-    margin-bottom: 12px;
-    transition: all 0.5s;
-}
-.badge-container:hover img{
-    filter: blur(1px) opacity(0.5);
-    transition: all 0.5s;
-}
-.badges img:hover{
-    filter: blur(0px) opacity(1);
-    transition: all 0.5s;
-}
-.badges{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .vol-tag{
     margin-right: -64px;
     font-size: 12px;
@@ -475,11 +447,44 @@ a:visited{
     grid-area: 5 / 3 / 6 / 4;
 } 
 
-
 .grid-links button{
     width: 100%;
     height: 100%;
 }
+
+
+
+.badges{
+    margin-top: 15px;
+    margin-bottom: -12px;
+}
+.badges a{
+    color: #0000;
+}
+.badges img{
+    box-shadow: 0px 0px 20px #fff0;
+    border-radius: 2px;
+    margin-right: 7px;
+    margin-bottom: 12px;
+    transition: all 0.5s;
+}
+.badge-container:hover img{
+    filter: blur(1px) opacity(0.5);
+    transition: all 0.5s;
+}
+.badges img:hover{
+    filter: blur(0px) opacity(1);
+    transition: all 0.5s;
+}
+.badges{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
 
 @media screen and (min-width: 820px) {
     h1{
