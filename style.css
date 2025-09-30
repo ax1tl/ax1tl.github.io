@@ -387,7 +387,7 @@ h3:hover pre{
     grid-row: 2;
 }
 
-.link, a:visited{
+.link, a:visited, a:link{
     color: #aaf;
 }
 
