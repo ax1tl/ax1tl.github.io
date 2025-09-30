@@ -387,11 +387,15 @@ h3:hover pre{
     grid-row: 2;
 }
 
-.link, a:link{
+a:link{
     color: #aaf;
+    text-decoration: none;
+    font-weight: bold;
 }
 a:visited{
-    color: #77c;
+    color: #aaf;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .link-grid {
@@ -409,7 +413,6 @@ a:visited{
 }
 .link-title{
     font-size: 3vw;
-    text-align: left;
 }
 .link-description{
     font-size: 1.25vw;
