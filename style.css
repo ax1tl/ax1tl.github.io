@@ -578,7 +578,6 @@ a:visited{
         font-size: 10px;
     }
 }
-
 @media screen and (max-width: 600px) {
     .grid-showcase {
         display: grid;
