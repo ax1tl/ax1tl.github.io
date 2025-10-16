@@ -1,0 +1,131 @@
+<link href="style.css" rel="stylesheet" type="text/css" media="all">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Bytesized&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<html>
+    <head>
+        <title>ax1.home</title>
+        <link rel="icon" type="image/png" href="images/face.ico"/>
+    </head>
+
+    <img src="images/site background.png" id="arg_bg_dark">
+
+    <!-- 
+        <img src="https://i.imgur.com/ynsMh0U.png" id="arg_bg_dark">
+        <img src="https://i.imgur.com/8gywqU5.png" id="arg_bg_dark">
+    -->
+
+
+    <body>
+        <h1>
+            <img style='vertical-align:middle;' src="images/axo logo 2.png" class="logo">
+            <a href="index.html" style="color: #fffa; font-weight: 100; font-size: 40px;">ax1tl</a>
+            <status class="status_bar">
+                <uhhmmm>
+                    a restless creative
+                </uhhmmm>
+            </status>
+        </h1>
+        <h3 class="updates" dir="ltr">
+            <div class="update_content">
+                <div class="ttd">
+                    <p class="title">
+                        <span class="title-center">> MUSIC</span> 
+                        <span class="vol-tag"> volume</span>
+                        <input class="seekBar" id="masterVolume" type="range" min="0" max="1" step="0.01" value="1">
+                    </p>
+                </div>
+                <div class="grid-showcase">
+                    <div class="item item-1">
+
+                        <div class="audio-player">
+                            <p class="demo-title">title</p>
+                            
+                            <audio src="music/showcase/portfolio 1-flourish.wav"></audio>
+                            <button class="playPause">▷</button>
+                            <div class="controls">
+                                <input class="seekBar" type="range" value="0" min="0" step="1">
+                            </div>
+
+                            <p class="demo-description">description</p>
+
+                        </div>
+                </div>
+                
+                <script>
+                    // Store all audio elements for volume control
+                    const allAudios = [];
+                    const allPlayPause = [];
+
+                    const masterVolume = document.getElementById('masterVolume');
+                    masterVolume.addEventListener('input', () => {
+                        allAudios.forEach(audio => {
+                            audio.volume = masterVolume.value;
+                        });
+                    });
+
+                    function initializeAudioPlayer(container) {
+                        const audio = container.querySelector('audio');
+                        const playPause = container.querySelector('.playPause');
+                        const seekBar = container.querySelector('.seekBar');
+                        
+                        // Keep track of this audio for master volume
+                        allAudios.push(audio);
+                        allPlayPause.push(playPause);
+
+                        function togglePlayPause() {
+
+                            if (audio.paused) {
+                                allAudios.forEach(function(audioin){
+                                    audioin.pause();
+                                });
+                                allPlayPause.forEach(function(playPausein){
+                                    playPausein.textContent = '▷';
+                                });
+
+                                audio.volume = masterVolume.value;
+
+                                audio.play();
+                                playPause.textContent = '❚❚';
+                            } else {
+                                audio.pause();
+                                playPause.textContent = '▷';
+                            }
+                        }
+                        
+                        function updateSeekBar() {
+                            seekBar.max = audio.duration;
+                            seekBar.value = audio.currentTime;
+                        }
+                        
+                        function seekAudio() {
+                            audio.currentTime = seekBar.value;
+                        }
+                        
+                        playPause.addEventListener('click', togglePlayPause);
+                        audio.addEventListener('timeupdate', updateSeekBar);
+                        seekBar.addEventListener('input', seekAudio);
+                    }
+                    
+                    // Initialize all players
+                    document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
+                </script>
+            </div>
+        </h3>
+
+    </body>
+    
+    <footer>
+        <div class="warning" id="wip">
+            This site is currently in development!
+        </div>
+    </footer>
+
+    <div id="version">
+        built with love - version 5.0.35
+    </div>
+</html>
