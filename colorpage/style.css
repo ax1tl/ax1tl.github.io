@@ -20,6 +20,8 @@
     --savec5: rgba(0,0,0,0);
 
     --bgcolor: rgb(var(--rval),var(--gval),var(--bval));
+
+    --preval: 0;
 }
 
 html{
@@ -304,4 +306,8 @@ html{
     color: #fff1;
 
     translate: 0px calc(var(--uiscale) * -3px);
+}
+
+pre {
+    color: var(--preval);
 }

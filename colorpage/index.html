@@ -22,6 +22,7 @@
             <input type="range" min="0" max="255" value="0" class="slider" id="green">
             <br>
             <input type="range" min="0" max="255" value="0" class="slider" id="blue">
+            #ffffff
         </div>
 
         <div class="savecontainer">
@@ -49,6 +50,7 @@
         var r = document.getElementById('red');
         var g = document.getElementById('green');
         var b = document.getElementById('blue');
+        var pre = 0;
         
         var open = document.getElementById('tab');
 
@@ -56,19 +58,24 @@
         root.style.setProperty('--gval', g.value);
         root.style.setProperty('--bval', b.value);
 
+        root.style.setProperty('--preval', pre);
+
         r.oninput = function() {
             root.style.setProperty('--rval', this.value);
             root.style.setProperty('--bgcolor', 'rgba('+r.value+','+g.value+','+b.value+',255)');
+            setPreVal();
         }
 
         green.oninput = function() {
             root.style.setProperty('--gval', this.value);
             root.style.setProperty('--bgcolor', 'rgba('+r.value+','+g.value+','+b.value+',255)');
+            setPreVal();
         }
 
         b.oninput = function() {
             root.style.setProperty('--bval', this.value);
             root.style.setProperty('--bgcolor', 'rgba('+r.value+','+g.value+','+b.value+',255)');
+            setPreVal();
         }
 
         function RGBAToHexA(rgba, forceRemoveAlpha = true) {
@@ -95,6 +102,21 @@
             console.log(r.value)
             console.log(g.value)
             console.log(b.value)
+        }
+
+        function setPreVal(){
+            var r1 = parseInt(r.value);
+            var g1 = parseInt(g.value);
+            var b1 = parseInt(b.value);
+            
+            if ((r1 + g1 + b1)/3 > 127){
+                pre = 0;
+            } else {
+                pre = 255;
+            }
+
+            root.style.setProperty('--preval', 'rgba('+pre+','+pre+','+pre+',255)');
+            console.log((r1 + g1 + b1)/3)   
         }
 
         function setCookie(cname, cvalue, exdays) {
@@ -183,30 +205,35 @@
             root.style.setProperty('--bgcolor', getComputedStyle(document.querySelector('#savet1')).backgroundColor);
             var fullhex = RGBAToHexA(getComputedStyle(document.querySelector('#savet1')).backgroundColor).substring(1);
             setrgbvals(fullhex);
+            setPreVal();
         }
 
         function setTile2(){
             root.style.setProperty('--bgcolor', getComputedStyle(document.querySelector('#savet2')).backgroundColor);
             var fullhex = RGBAToHexA(getComputedStyle(document.querySelector('#savet2')).backgroundColor).substring(1);
             setrgbvals(fullhex);
+            setPreVal();
         }
 
         function setTile3(){
             root.style.setProperty('--bgcolor', getComputedStyle(document.querySelector('#savet3')).backgroundColor);
             var fullhex = RGBAToHexA(getComputedStyle(document.querySelector('#savet3')).backgroundColor).substring(1);
             setrgbvals(fullhex);
+            setPreVal();
         }
 
         function setTile4(){
             root.style.setProperty('--bgcolor', getComputedStyle(document.querySelector('#savet4')).backgroundColor);
             var fullhex = RGBAToHexA(getComputedStyle(document.querySelector('#savet4')).backgroundColor).substring(1);
             setrgbvals(fullhex);
+            setPreVal();
         }
 
         function setTile5(){
             root.style.setProperty('--bgcolor', getComputedStyle(document.querySelector('#savet5')).backgroundColor);
             var fullhex = RGBAToHexA(getComputedStyle(document.querySelector('#savet5')).backgroundColor).substring(1);
             setrgbvals(fullhex);
+            setPreVal();
         }
     </script>
 </html>
