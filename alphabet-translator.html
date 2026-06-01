@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cipher — Alphabet Translator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F2ED;
+    --surface: #FDFCFA;
+    --surface-2: #EFECEA;
+    --border: rgba(60,50,40,0.12);
+    --border-strong: rgba(60,50,40,0.22);
+    --ink: #1C1712;
+    --ink-2: #5C5248;
+    --ink-3: #9C9088;
+    --accent: #C4420A;
+    --accent-bg: #FDF0EB;
+    --accent-border: rgba(196,66,10,0.25);
+    --purple: #4A3F8A;
+    --purple-bg: #EEEDFE;
+    --purple-border: rgba(74,63,138,0.25);
+    --green: #1D6B3E;
+    --green-bg: #EAF5F0;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Instrument Serif', serif;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  html { font-family: var(--sans); background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo {
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .logo-name {
+    font-family: var(--serif); font-size: 22px; color: var(--ink); letter-spacing: -0.01em;
+  }
+  .logo-tag {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em;
+  }
+  .header-right { display: flex; gap: 8px; }
+  .hdr-btn {
+    font-family: var(--sans); font-size: 13px; font-weight: 400; color: var(--ink-2);
+    background: transparent; border: 1px solid var(--border); border-radius: 8px;
+    padding: 5px 13px; cursor: pointer; transition: all 0.15s;
+  }
+  .hdr-btn:hover { background: var(--surface-2); color: var(--ink); }
+
+  /* MAIN LAYOUT */
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 1.25rem;
+  }
+
+  /* PANEL */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+  }
+  .panel-title {
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .panel-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+  /* TEXTAREA */
+  textarea {
+    width: 100%; flex: 1; min-height: 140px;
+    font-family: var(--mono); font-size: 14px; line-height: 1.7; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+    resize: none; outline: none; transition: border-color 0.15s;
+  }
+  textarea:focus { border-color: var(--border-strong); }
+  textarea::placeholder { color: var(--ink-3); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex; gap: 8px;
+  }
+  .stat {
+    flex: 1; background: var(--surface-2); border-radius: 8px;
+    padding: 8px 12px; text-align: center;
+  }
+  .stat-n { font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--ink); display: block; }
+  .stat-l { font-size: 11px; color: var(--ink-3); display: block; margin-top: 1px; }
+
+  /* OUTPUT */
+  .output-area {
+    flex: 1; min-height: 140px;
+    font-family: var(--mono); font-size: 14px; line-height: 1.7; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+    white-space: pre-wrap; word-break: break-all; overflow-y: auto;
+  }
+  .output-placeholder { color: var(--ink-3); font-style: italic; font-size: 13px; }
+
+  /* COPY BTN */
+  .copy-btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    background: var(--accent-bg); border: 1px solid var(--accent-border);
+    border-radius: 8px; color: var(--accent); padding: 5px 14px;
+    cursor: pointer; transition: all 0.13s;
+  }
+  .copy-btn:hover { background: #FAE0D5; }
+
+  /* MAP PANEL — spans both columns */
+  .map-panel {
+    grid-column: 1 / -1;
+  }
+  .map-panel .panel-body {
+    flex-direction: column; gap: 0;
+  }
+
+  /* PRESETS */
+  .presets-row {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    background: var(--bg);
+  }
+  .presets-label { font-size: 12px; color: var(--ink-3); margin-right: 4px; }
+  .preset-btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink-2);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 999px; padding: 4px 14px;
+    cursor: pointer; transition: all 0.13s;
+  }
+  .preset-btn:hover { border-color: var(--border-strong); color: var(--ink); }
+  .preset-btn.active { background: var(--purple-bg); border-color: var(--purple-border); color: var(--purple); }
+  .preset-btn.clear-btn { color: var(--accent); border-color: var(--accent-border); background: var(--accent-bg); }
+  .preset-btn.clear-btn:hover { background: #FAE0D5; }
+
+  /* PAIRS TABLE */
+  .pairs-scroll { overflow-y: auto; max-height: 280px; }
+  .pairs-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .pairs-table thead th {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 400;
+    padding: 10px 20px 8px; text-align: left; border-bottom: 1px solid var(--border);
+    background: var(--surface); position: sticky; top: 0;
+  }
+  .pairs-table thead th:nth-child(2) { width: 40px; text-align: center; }
+  .pairs-table thead th:last-child { width: 44px; }
+  .pair-row td { padding: 5px 20px; border-bottom: 1px solid var(--border); }
+  .pair-row:last-child td { border-bottom: none; }
+  .pair-row:hover td { background: var(--bg); }
+  .pair-row td:nth-child(2) { text-align: center; color: var(--ink-3); font-size: 14px; }
+
+  .pair-input {
+    width: 100%; font-family: var(--mono); font-size: 13px; color: var(--ink);
+    background: transparent; border: 1px solid transparent;
+    border-radius: 6px; padding: 5px 9px; outline: none; transition: all 0.13s;
+  }
+  .pair-input:focus { background: var(--surface); border-color: var(--border-strong); }
+  .pair-input::placeholder { color: var(--ink-3); }
+
+  .del-row-btn {
+    width: 28px; height: 28px; border-radius: 6px; border: 1px solid transparent;
+    background: transparent; cursor: pointer; color: var(--ink-3);
+    font-size: 13px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s; margin: auto;
+  }
+  .del-row-btn:hover { background: #FCEBEB; border-color: #F09595; color: #A32D2D; }
+
+  /* ACTION ROW */
+  .pairs-actions {
+    display: flex; gap: 8px; padding: 12px 20px;
+    border-top: 1px solid var(--border); background: var(--surface);
+  }
+  .action-btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--ink-2);
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 14px; cursor: pointer; transition: all 0.13s;
+  }
+  .action-btn:hover { border-color: var(--border-strong); color: var(--ink); background: var(--surface-2); }
+
+  /* BULK MODAL */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(20,15,10,0.45);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+    width: 360px; max-width: 90vw;
+    animation: popIn 0.18s ease;
+  }
+  @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-title { font-family: var(--serif); font-size: 20px; margin-bottom: 6px; }
+  .modal-hint { font-size: 13px; color: var(--ink-2); margin-bottom: 14px; line-height: 1.6; }
+  .modal-hint code { font-family: var(--mono); font-size: 12px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+  .modal-actions { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border); padding: 14px 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface);
+  }
+  .footer-left { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  .footer-right { font-size: 12px; color: var(--ink-3); }
+  #pair-count-badge {
+    display: inline-block; background: var(--purple-bg); color: var(--purple);
+    border-radius: 999px; font-family: var(--mono); font-size: 11px;
+    padding: 2px 9px; margin-left: 6px;
+  }
+
+  /* PAGE LOAD ANIMATION */
+  .panel, header, footer {
+    animation: fadeUp 0.35s ease both;
+  }
+  header { animation-delay: 0s; }
+  main .panel:nth-child(1) { animation-delay: 0.07s; }
+  main .panel:nth-child(2) { animation-delay: 0.12s; }
+  main .panel:nth-child(3) { animation-delay: 0.17s; }
+  footer { animation-delay: 0.2s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    main { grid-template-columns: 1fr; padding: 1rem; }
+    .map-panel { grid-column: 1; }
+    header { padding: 0 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-name">Cipher</span>
+    <span class="logo-tag">alphabet translator</span>
+  </div>
+  <div class="header-right">
+    <button class="hdr-btn" onclick="document.getElementById('bulk-modal').classList.add('open')">Bulk import</button>
+    <button class="hdr-btn" onclick="clearAll()">Clear all</button>
+  </div>
+</header>
+
+<main>
+  <!-- INPUT -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Input</span>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--ink-3);" id="char-in-lbl">0 chars</span>
+    </div>
+    <div class="panel-body">
+      <textarea id="input-text" placeholder="Type or paste your text here…" rows="6"></textarea>
+      <div class="stats-bar" id="stats-bar" style="display:none;">
+        <div class="stat"><span class="stat-n" id="stat-subs">0</span><span class="stat-l">substitutions</span></div>
+        <div class="stat"><span class="stat-n" id="stat-in">0</span><span class="stat-l">chars in</span></div>
+        <div class="stat"><span class="stat-n" id="stat-out">0</span><span class="stat-l">chars out</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Output</span>
+      <button class="copy-btn" id="copy-btn" onclick="copyOutput()">Copy</button>
+    </div>
+    <div class="panel-body">
+      <div class="output-area" id="output-area">
+        <span class="output-placeholder">Translated text will appear here…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="panel map-panel">
+    <div class="panel-header">
+      <span class="panel-title">Character map</span>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--ink-3);">Unmapped characters pass through unchanged</span>
+    </div>
+    <div class="presets-row">
+      <span class="presets-label">Presets</span>
+      <button class="preset-btn" data-preset="rot13">ROT13</button>
+      <button class="preset-btn" data-preset="leet">Leet speak</button>
+      <button class="preset-btn" data-preset="reverse">Reverse alphabet</button>
+      <button class="preset-btn" data-preset="morse">Morse code</button>
+      <button class="preset-btn" data-preset="caesar3">Caesar +3</button>
+      <button class="preset-btn" data-preset="luya">Luya</button>
+      <button class="preset-btn clear-btn" data-preset="clear">Clear</button>
+    </div>
+    <div class="pairs-scroll">
+      <table class="pairs-table">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>→</th>
+            <th>To</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="pairs-body"></tbody>
+      </table>
+    </div>
+    <div class="pairs-actions">
+      <button class="action-btn" onclick="addPair()">+ Add row</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span class="footer-left">cipher<span id="pair-count-badge">0 pairs</span></span>
+  <span class="footer-right">Unmapped characters pass through unchanged</span>
+</footer>
+
+<!-- BULK MODAL -->
+<div class="modal-backdrop" id="bulk-modal">
+  <div class="modal">
+    <p class="modal-title">Bulk import</p>
+    <p class="modal-hint">One mapping per line using <code>from=to</code> or <code>from,to</code><br>Example: <code>a=@</code> &nbsp;·&nbsp; <code>hello=hi</code></p>
+    <textarea id="bulk-input" rows="8" placeholder="a=@&#10;e=3&#10;s=5&#10;hello=hi"></textarea>
+    <div class="modal-actions">
+      <button class="action-btn" onclick="document.getElementById('bulk-modal').classList.remove('open')">Cancel</button>
+      <button class="action-btn" style="background:var(--purple-bg);border-color:var(--purple-border);color:var(--purple);font-weight:500;" onclick="applyBulk()">Import pairs</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let pairs = [];
+let activePreset = null;
+
+const PRESETS = {
+  rot13: 'abcdefghijklmnopqrstuvwxyz'.split('').map((c,i)=>[c,'abcdefghijklmnopqrstuvwxyz'[(i+13)%26]]).concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((c,i)=>[c,'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[(i+13)%26]])),
+  leet: [['a','@'],['e','3'],['i','1'],['o','0'],['t','7'],['s','5'],['A','@'],['E','3'],['I','1'],['O','0'],['T','7'],['S','5']],
+  reverse: 'abcdefghijklmnopqrstuvwxyz'.split('').map((c,i)=>[c,'zyxwvutsrqponmlkjihgfedcba'[i]]).concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((c,i)=>[c,'ZYXWVUTSRQPONMLKJIHGFEDCBA'[i]])),
+  caesar3: 'abcdefghijklmnopqrstuvwxyz'.split('').map((c,i)=>[c,'abcdefghijklmnopqrstuvwxyz'[(i+3)%26]]).concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((c,i)=>[c,'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[(i+3)%26]])),
+  morse: [['a','.-'],['b','-...'],['c','-.-.'],['d','-..'],['e','.'],['f','..-.'],['g','--.'],['h','....'],['i','..'],['j','.---'],['k','-.-'],['l','.-..'],['m','--'],['n','-.'],['o','---'],['p','.--.'],['q','--.-'],['r','.-.'],['s','...'],['t','-'],['u','..-'],['v','...-'],['w','.--'],['x','-..-'],['y','-.--'],['z','--..'],['A','.-'],['B','-...'],['C','-.-.'],['D','-..'],['E','.'],['F','..-.'],['G','--.'],['H','....'],['I','..'],['J','.---'],['K','-.-'],['L','.-..'],['M','--'],['N','-.'],['O','---'],['P','.--.'],['Q','--.-'],['R','.-.'],['S','...'],['T','-'],['U','..-'],['V','...-'],['W','.--'],['X','-..-'],['Y','-.--'],['Z','--..'],['0','-----'],['1','.----'],['2','..---'],['3','...--'],['4','....-'],['5','.....'],['6','-....'],['7','--...'],['8','---..'],['9','----.']],
+  luya: [['a','▲'],['e','△'],['i','▶'],['o','▽'],['u','▼'],['y','◀'],['k','◤'],['h','◸'],['s','▞'],['z','▚'],['b','▙'],['d','▟'],['p','▛'],['q','▜'],['j','◢'],['g','◿'],['m','▄'],['n','▖'],['f','◆'],['v','◇'],['t','▔'],['l','▇'],['r','◣'],['[','[ '],[']',' ]'],[':',' : ']],
+  clear: []
+};
+
+function uid() { return '_' + Math.random().toString(36).slice(2); }
+
+function addPair(from='', to='') {
+  const id = uid();
+  pairs.push(id);
+  const tbody = document.getElementById('pairs-body');
+  const tr = document.createElement('tr');
+  tr.className = 'pair-row';
+  tr.id = 'row-' + id;
+  tr.innerHTML = `<td><input class="pair-input" type="text" placeholder="from" data-id="${id}" data-role="from" value=""></td>
+    <td style="color:var(--ink-3);font-size:14px;text-align:center;">→</td>
+    <td><input class="pair-input" type="text" placeholder="to" data-id="${id}" data-role="to" value=""></td>
+    <td><button class="del-row-btn" title="Remove">✕</button></td>`;
+  tbody.appendChild(tr);
+  tr.querySelector('[data-role="from"]').value = from;
+  tr.querySelector('[data-role="to"]').value = to;
+  tr.querySelectorAll('.pair-input').forEach(el => el.addEventListener('input', translate));
+  tr.querySelector('.del-row-btn').addEventListener('click', () => removePair(id));
+  updateBadge();
+  translate();
+}
+
+function removePair(id) {
+  pairs = pairs.filter(p => p !== id);
+  const el = document.getElementById('row-' + id);
+  if (el) el.remove();
+  updateBadge();
+  translate();
+}
+
+function getMapping() {
+  const map = {};
+  document.querySelectorAll('[data-role="from"]').forEach(el => {
+    const id = el.dataset.id;
+    const from = el.value;
+    const toEl = document.querySelector(`[data-id="${id}"][data-role="to"]`);
+    if (from && toEl) map[from] = toEl.value;
+  });
+  return map;
+}
+
+function translate() {
+  const input = document.getElementById('input-text').value;
+  const outArea = document.getElementById('output-area');
+  const statsBar = document.getElementById('stats-bar');
+  const charInLbl = document.getElementById('char-in-lbl');
+  charInLbl.textContent = [...input].length + ' chars';
+  if (!input) {
+    outArea.innerHTML = '<span class="output-placeholder">Translated text will appear here…</span>';
+    statsBar.style.display = 'none';
+    return;
+  }
+  const map = getMapping();
+  const keys = Object.keys(map).sort((a,b) => b.length - a.length);
+  let result = '', i = 0, subs = 0;
+  while (i < input.length) {
+    let matched = false;
+    for (const k of keys) {
+      if (input.slice(i, i + k.length) === k) {
+        result += map[k]; i += k.length; subs++; matched = true; break;
+      }
+    }
+    if (!matched) { result += input[i]; i++; }
+  }
+  outArea.textContent = result;
+  document.getElementById('stat-subs').textContent = subs;
+  document.getElementById('stat-in').textContent = [...input].length;
+  document.getElementById('stat-out').textContent = [...result].length;
+  statsBar.style.display = 'flex';
+}
+
+function updateBadge() {
+  document.getElementById('pair-count-badge').textContent = pairs.length + ' pair' + (pairs.length !== 1 ? 's' : '');
+}
+
+function loadPreset(name) {
+  document.getElementById('pairs-body').innerHTML = '';
+  pairs = [];
+  (PRESETS[name] || []).forEach(([f,t]) => addPair(f,t));
+  if (!PRESETS[name] || PRESETS[name].length === 0) addPair();
+  activePreset = name === 'clear' ? null : name;
+  document.querySelectorAll('.preset-btn[data-preset]').forEach(b => {
+    if (!b.classList.contains('clear-btn'))
+      b.classList.toggle('active', b.dataset.preset === activePreset);
+  });
+  updateBadge();
+  translate();
+}
+
+function clearAll() {
+  document.getElementById('pairs-body').innerHTML = '';
+  pairs = [];
+  activePreset = null;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  addPair();
+  updateBadge();
+  translate();
+}
+
+function copyOutput() {
+  const text = document.getElementById('output-area').textContent;
+  if (!text || text === 'Translated text will appear here…') return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1600);
+  });
+}
+
+function applyBulk() {
+  document.getElementById('bulk-input').value.split('\n').forEach(line => {
+    line = line.trim(); if (!line) return;
+    const sep = line.includes('=') ? '=' : ',';
+    const idx = line.indexOf(sep); if (idx < 0) return;
+    addPair(line.slice(0,idx), line.slice(idx+1));
+  });
+  document.getElementById('bulk-modal').classList.remove('open');
+  document.getElementById('bulk-input').value = '';
+  translate();
+}
+
+document.querySelectorAll('.preset-btn[data-preset]').forEach(btn => {
+  btn.addEventListener('click', () => loadPreset(btn.dataset.preset));
+});
+document.getElementById('input-text').addEventListener('input', translate);
+document.getElementById('bulk-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('bulk-modal'))
+    document.getElementById('bulk-modal').classList.remove('open');
+});
+
+addPair();
+updateBadge();
+</script>
+</body>
+</html>

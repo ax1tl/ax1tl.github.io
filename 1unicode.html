@@ -1,0 +1,188 @@
+<link href="unicodeStyle.css" rel="stylesheet" type="text/css" media="all">
+<script src="javascript.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ax1.unicode</title>
+	</head>
+	<body>
+		<script>
+			function delay(time) {
+				return new Promise(resolve => setTimeout(resolve, time));
+			}
+			function copyToClipboard(character) {
+				const el = document.createElement('textarea');
+				el.value = character;
+				document.body.appendChild(el);
+				el.select();
+				document.execCommand('copy');
+				document.body.removeChild(el);
+			}
+			function prevPage(){
+				const pageNum = document.getElementById('pageNum').value;
+				if (pageNum > 1){
+					document.getElementById('pageNum').value = pageNum - 1;
+				}
+				if (pageNum < 1){
+					document.getElementById('pageNum').value = 1;
+				}
+				generateButtons();
+			}
+			function nextPage(){
+				const pageNum = document.getElementById('pageNum').value;
+				const pageAmnt = document.getElementById('pageAmnt').value;
+				const maxPage = Math.floor(65536 / pageAmnt) + 1;
+				
+				if (pageNum < maxPage){
+					document.getElementById('pageNum').value = parseInt(pageNum) + 1;
+				}
+				if (pageNum > maxPage){
+					document.getElementById('pageNum').value = maxPage;
+				}
+				generateButtons();
+			}
+			function prevAmnt(){
+				const pageAmnt = document.getElementById('pageAmnt').value;
+				if (pageAmnt / 4 < 16){
+					document.getElementById('pageAmnt').value = 16;
+				}
+				else {
+					document.getElementById('pageAmnt').value = pageAmnt / 4;
+				}
+
+				generateButtons();
+			}
+			function nextAmnt(){
+				const pageAmnt = document.getElementById('pageAmnt').value;
+				if (pageAmnt * 4 > 4096){
+					document.getElementById('pageAmnt').value = 4096;
+				}
+				else {
+					document.getElementById('pageAmnt').value = pageAmnt * 4;
+				}
+
+				generateButtons();
+			}
+			function generateButtons() {
+				const pageNum = document.getElementById('pageNum').value;
+				const pageAmnt = document.getElementById('pageAmnt').value;
+
+				let container = document.querySelector('.grid-container');
+        		if (container) {
+        		  	container.innerHTML = '';
+        		} else {
+        		  	container = document.createElement('div');
+        		  	container.classList.add('grid-container');
+        		}
+				
+				container.classList.add('grid-container');
+				var lastCharIndex = pageAmnt * pageNum;
+				if (lastCharIndex > 65536){
+					lastCharIndex = 65536;
+				}
+				for (let i = pageAmnt * (pageNum-1); i < lastCharIndex; i++) { // i < 65536 // dead space at 55296
+					const character = String.fromCharCode(i);
+					const button = document.createElement('div');
+					button.classList.add('grid-item');
+					button.innerHTML = character + '<br><span>' + 'U+' + i.toString(16).toUpperCase().padStart(4, '0') + '</span><span>' + character.codePointAt(0).toString(16).toUpperCase() + '</span>';
+					button.onclick = function () {
+						copyToClipboard(character);
+						this.style.color = "#f88";
+						this.style.textShadow = "0px 0px 15px #f00";
+						this.style.borderColor = "#faa";
+						this.style.boxShadow = "inset 0px 0px 50px #f008";
+						delay(1000).then(() => this.style.color = "#fffa");
+						delay(1000).then(() => this.style.textShadow = "0px 0px 2px");
+						delay(1000).then(() => this.style.borderColor = "#fff3");
+						delay(1000).then(() => this.style.boxShadow = "inset 0px 0px 50px #fff2");
+					};
+					container.appendChild(button);
+				}
+				document.body.appendChild(container);
+			}
+			function generateSearch() {
+				const unicode = document.getElementById('searchbar').value;
+
+				let container = document.querySelector('.grid-container');
+        		if (container) {
+        		  	container.innerHTML = '';
+        		} else {
+        		  	container = document.createElement('div');
+        		  	container.classList.add('grid-container');
+        		}
+				
+				container.classList.add('grid-container');
+				const newDiv = document.querySelector('.grid-container')
+				
+				const character = String.fromCharCode(parseInt(unicode, 16));
+				const button = document.createElement('div');
+				button.classList.add('grid-item');
+				button.innerHTML = character + '<br><span>' + 'U+' + character.codePointAt(0).toString(16).toUpperCase() + '</span>';
+				button.onclick = function () {
+					copyToClipboard(character);
+					this.style.color = "#f88";
+					this.style.textShadow = "0px 0px 15px #f00";
+					this.style.borderColor = "#faa";
+					this.style.boxShadow = "inset 0px 0px 50px #f008";
+					delay(1000).then(() => this.style.color = "#fffa");
+					delay(1000).then(() => this.style.textShadow = "0px 0px 2px");
+					delay(1000).then(() => this.style.borderColor = "#fff3");
+					delay(1000).then(() => this.style.boxShadow = "inset 0px 0px 50px #fff2");
+				};
+				container.appendChild(button);
+				
+				document.body.appendChild(container);
+			}
+		</script>
+    	<h1>
+			The Unicode Library
+		</h1>
+    	<br>
+    	<h3 class="updates" dir="ltr"> 
+			<div class="update_content">
+				<div class="ttd">
+					<p class="title">
+						Click on a button to copy its corresponding Unicode character to the clipboard:
+					</p>
+    	        </div>
+    	        <p class="Description">
+					<div class="input">
+						<input class="inSearch" type="text" id="searchbar" placeholder="Search" oninput="generateSearch()">
+						
+						<div class="content" id="searchOut">
+							<div class="grid-container">
+								<div class="grid-item">
+									&
+									<br>
+									<span>
+										U+0026
+									</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="input">
+						<pageManager class="pages" onclick="prevPage()"><</pageManager>
+						<input class="inBox" type="text" id="pageNum" placeholder="Page" value="1" oninput="generateButtons()">
+						<pageManager class="pages" onclick="nextPage()">></pageManager>
+						<space></space>
+						<pageManager class="pages" onclick="prevAmnt()"><</pageManager>
+						<input class="inBox" type="text" id="pageAmnt" placeholder="Amount Per" value="256" oninput="generateButtons()">
+						<pageManager class="pages" onclick="nextAmnt()">></pageManager>
+					</div>
+				</p>
+    	        <div class="content">
+					<script>
+						generateButtons();
+					</script>
+    	        </div>
+    	    </div>
+    	</h3>
+	</body>
+</html>
+<!---->
