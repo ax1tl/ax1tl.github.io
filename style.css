@@ -23,6 +23,7 @@ html{
     background-color: #000;
     background-image: url('images/bg.png');
     background-position: center;
+    filter: blur(0.6px);
 }
 body{
     margin: 0;
