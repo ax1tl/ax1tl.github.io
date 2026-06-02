@@ -4,12 +4,22 @@
     --master-padding: 5em;
     --mobile-margin: 0%;
     --mobile-padding: 0.25em;
+
     --text: #fff;
+    --tagline_text: #fff8;
     --sb_header: #fffa;
     --sb_link: #fff;
+
     --sb_link_hover: #0002;
     --sb_size: calc((var(--window)-(var(--master-padding)*2))/5);
     --work_height: calc(100vh-(var(--master-padding)*2));
+
+    --white: #fff;
+    --red: #f42;
+    --blue: #2cf;
+
+    --hud_transition_in: 0.5s;
+    --hud_transition_out: 1s;
 }
 
 .electrical-box{
@@ -24,6 +34,11 @@ html{
     background-image: url('images/bg.png');
     background-position: center;
     filter: blur(0.6px);
+}
+#tagline{
+    font-size: 0.5em;
+    color: var(--tagline_text);
+    font-weight: normal;
 }
 body{
     margin: 0;
@@ -48,6 +63,17 @@ html::-webkit-scrollbar{
 .line{
     border-top: 1px solid #fff3;
     margin: 1em 0em;
+}
+
+a:link{
+    color: var(--red);
+    text-decoration: none;
+    font-weight: bold;
+}
+a:visited{
+    color: var(--red);
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /* ======= OVERLAY ======= */
@@ -83,13 +109,41 @@ html::-webkit-scrollbar{
 
 .hud_overlay {
     position: absolute;
+    filter: opacity(0.5);
+
+    transition: all var(--hud_transition_out) ease;
 }
-#ol1, #ol2, #ol3 {top: 1em;}
-#ol3, #ol4, #ol5 {right: 1em;}
-#ol5, #ol6 {bottom: 1em;}
-#ol6, #ol7, #ol1 {left: 1em;}
+html:hover .hud_overlay{
+    filter: opacity(1);
+    transition: all var(--hud_transition_in) ease;
+}
+
+#ol1, #ol2, #ol3 {
+    top: 3em;
+    transition: all var(--hud_transition_out) ease;}
+#ol3, #ol4, #ol5 {
+    right: 3em;
+    transition: all var(--hud_transition_out) ease;}
+#ol5, #ol6 {
+    bottom: 3em;
+    transition: all var(--hud_transition_out) ease;}
+#ol6, #ol7, #ol1 {
+    left: 3em;
+    transition: all var(--hud_transition_out) ease;}
 #ol2{left: calc(50% - 16px);}
 #ol4, #ol7{top: calc(50% - 16px);}
+html:hover #ol1, html:hover #ol2, html:hover #ol3 {
+    top: 1em;
+    transition: all var(--hud_transition_in) ease;}
+html:hover #ol3, html:hover #ol4, html:hover #ol5 {
+    right: 1em;
+    transition: all var(--hud_transition_in) ease;}
+html:hover #ol5, html:hover #ol6 {
+    bottom: 1em;
+    transition: all var(--hud_transition_in) ease;}
+html:hover #ol6, html:hover #ol7, html:hover #ol1 {
+    left: 1em;
+    transition: all var(--hud_transition_in) ease;}
 
 
 
@@ -113,7 +167,8 @@ html::-webkit-scrollbar{
     margin-bottom: 0em;
 }
 .sb_link{
-    color: var(--sb_link);
+    color: var(--sb_link) !important;
+    font-weight: normal !important;
     text-decoration: none;
     background-color: #fff0;
 }
@@ -123,7 +178,7 @@ html::-webkit-scrollbar{
 
     border-left: 0px solid #fff0;
 
-    box-shadow: 0px 0px 0px #fff;
+    box-shadow: 0px 0px 0px #fff, 0px 0px 0px #fff3;
     
     transition: all 1s ease;
 }
@@ -132,7 +187,9 @@ html::-webkit-scrollbar{
     width: 90%;
 
     border-left: 10px solid #fff0;
-    box-shadow: -2px 0px 0px #fff;
+    box-shadow: -2px 0px 0px #fff, -4px 0px 0px #fff3;
+
+    text-shadow: 0px 0px 10px;
 
     transition: all 0.25s ease;
 }
@@ -150,6 +207,19 @@ html::-webkit-scrollbar{
     font-size: 1.5em;
     color: var(--sb_header);
     margin-bottom: 1em;
+}
+
+.main_parent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 2em;
+}
+.main_latest{
+    grid-column: span 2 / span 2;
+}
+.main_early{
+    grid-column: span 1 / span 1;
 }
 
 /* ======= BADGES ======= */
@@ -212,6 +282,15 @@ html::-webkit-scrollbar{
     }
     .main {
         grid-column: span 2 / span 2;
+    }
+    .main_parent {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        gap: 2em;
+    }
+    .main_early{
+        grid-column: span 1 / span 1;
     }
 }
 
