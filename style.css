@@ -210,12 +210,12 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
 
 .main_parent {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, 1fr);
     gap: 2em;
 }
 .main_latest{
-    grid-column: span 2 / span 2;
+    grid-column: span 1 / span 1;
 }
 .main_early{
     grid-column: span 1 / span 1;
@@ -253,7 +253,7 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
 }
 
 #version {
-    position: absolute;
+    position: fixed;
     left: 1.5em;
     bottom: 1.1em;
     z-index: -10;
@@ -359,8 +359,4 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     .badge-container{
         padding-bottom: 2em;
     }
-    #version {
-        position: fixed;
-    }
-    
 }
