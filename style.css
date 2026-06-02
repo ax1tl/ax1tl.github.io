@@ -17,7 +17,7 @@
 
     --white: #fff;
     --red: #f42;
-    --blue: #2cf;
+    --black: #223;
 
     --hud_transition_in: 0.5s;
     --hud_transition_out: 1s;
@@ -68,13 +68,25 @@ html::-webkit-scrollbar{
 
 a:link{
     color: var(--red);
+    background-color: #f420;
     text-decoration: none;
     font-weight: bold;
+
+    transition: all 0.25s ease;
 }
 a:visited{
     color: var(--red);
+    background-color: #f420;
     text-decoration: none;
     font-weight: bold;
+
+    transition: all 0.25s ease;
+}
+a:hover{
+    background-color: #f42;
+    color: #223;
+
+    transition: all 0.25s ease;
 }
 
 /* ======= OVERLAY ======= */
@@ -169,7 +181,7 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     color: var(--sb_link) !important;
     font-weight: normal !important;
     text-decoration: none;
-    background-color: #fff0;
+    background-color: #fff0 !important;
 }
 .sb_link_container{
     margin-left: 1em;
