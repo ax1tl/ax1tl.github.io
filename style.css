@@ -218,8 +218,11 @@ html::-webkit-scrollbar{
 @media (max-width: 930px) {
     :root{
         --window: 100vw;
-        --master-padding: 1em;
+        --master-padding: 1.5em;
         --mobile-margin: 5%;
+    }
+    html{
+        background-position: fixed;
     }
     #grain_texture, #noise_texture{
         scale: 1.25;
