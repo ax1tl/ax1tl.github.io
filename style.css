@@ -52,7 +52,7 @@ html::-webkit-scrollbar{
 
 .overlay {
     pointer-events: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -61,7 +61,7 @@ html::-webkit-scrollbar{
     object-fit: cover;
 }
 #grain_texture{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -70,7 +70,7 @@ html::-webkit-scrollbar{
     object-fit: cover;
 }
 #noise_texture{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -78,6 +78,18 @@ html::-webkit-scrollbar{
     opacity: 0.2;
     object-fit: cover;
 }
+
+.hud_overlay {
+    position: absolute;
+}
+#ol1, #ol2, #ol3 {top: 1em;}
+#ol3, #ol4, #ol5 {right: 1em;}
+#ol5, #ol6 {bottom: 1em;}
+#ol6, #ol7, #ol1 {left: 1em;}
+#ol2{left: calc(50% - 16px);}
+#ol4, #ol7{top: calc(50% - 16px);}
+
+
 
 .parent {
     display: grid;
@@ -138,6 +150,46 @@ html::-webkit-scrollbar{
     margin-bottom: 1em;
 }
 
+/* ======= BADGES ======= */
+
+.badges{
+    margin-top: 15px;
+    margin-bottom: -12px;
+}
+.badges a{
+    color: #0000;
+}
+.badges img{
+    box-shadow: 0px 0px 20px #fff0;
+    border-radius: 2px;
+    margin-right: 7px;
+    margin-bottom: 12px;
+    transition: all 0.5s;
+}
+.badge-container:hover img{
+    filter: blur(1px) opacity(0.5);
+    transition: all 0.5s;
+}
+.badges img:hover{
+    filter: blur(0px) opacity(1);
+    transition: all 0.5s;
+}
+.badges{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#version {
+    position: absolute;
+    left: 1.5em;
+    bottom: 1.1em;
+    z-index: -10;
+    color: #fff3;
+}
+
+
 @media (max-width: 1390px) {
     .parent {
         display: grid;
@@ -189,46 +241,11 @@ html::-webkit-scrollbar{
     .main {
         grid-column: span 1 / span 1;
     }
+    .hud_overlay{
+        position: fixed;
+    }
+    #version {
+        display: none;
+    }
     
-}
-
-
-
-/* ======= BADGES ======= */
-
-.badges{
-    margin-top: 15px;
-    margin-bottom: -12px;
-}
-.badges a{
-    color: #0000;
-}
-.badges img{
-    box-shadow: 0px 0px 20px #fff0;
-    border-radius: 2px;
-    margin-right: 7px;
-    margin-bottom: 12px;
-    transition: all 0.5s;
-}
-.badge-container:hover img{
-    filter: blur(1px) opacity(0.5);
-    transition: all 0.5s;
-}
-.badges img:hover{
-    filter: blur(0px) opacity(1);
-    transition: all 0.5s;
-}
-.badges{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-#version {
-    position: absolute;
-    left: 1em;
-    bottom: 1em;
-    z-index: -10;
-    color: #fff3;
 }
