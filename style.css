@@ -220,6 +220,9 @@ html::-webkit-scrollbar{
         --master-padding: 1em;
         --mobile-margin: 5%;
     }
+    #grain_texture, #noise_texture{
+        scale: 1.25;
+    }
     .parent {
         grid-template-columns: repeat(1, 1fr);
         grid-template-rows: repeat(2, auto);
