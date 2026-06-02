@@ -4,6 +4,7 @@
     --master-padding: 5em;
     --mobile-margin: 0%;
     --mobile-padding: 0.25em;
+    --mobile-padding-inactive: 1em;
 
     --text: #fff;
     --tagline_text: #fff8;
@@ -144,8 +145,6 @@ html:hover #ol5, html:hover #ol6 {
 html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     left: 1em;
     transition: all var(--hud_transition_in) ease;}
-
-
 
 .parent {
     display: grid;
@@ -292,6 +291,12 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     .main_early{
         grid-column: span 1 / span 1;
     }
+    .main_latest{
+        grid-column: span 1 / span 1;
+    }
+    /* DEBUGGING
+    #ol3{ filter: hue-rotate(180deg);} 
+    */
 }
 
 @media (max-width: 930px) {
@@ -299,6 +304,7 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
         --window: 100vw;
         --master-padding: 1.5em;
         --mobile-margin: 5%;
+        --mobile-margin-inactive: 7%;
     }
     html{
         background-position: fixed;
@@ -334,10 +340,22 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     .hud_overlay{
         position: fixed;
     }
-    #ol1, #ol2, #ol3 {top: var(--mobile-padding);}
-    #ol3, #ol4, #ol5 {right: var(--mobile-padding);}
-    #ol5, #ol6 {bottom: var(--mobile-padding);}
-    #ol6, #ol7, #ol1 {left: var(--mobile-padding);}
+    #ol1, #ol2, #ol3 {top: var(--mobile-padding-inactive);}
+    #ol3, #ol4, #ol5 {right: var(--mobile-padding-inactive);}
+    #ol5, #ol6 {bottom: var(--mobile-padding-inactive);}
+    #ol6, #ol7, #ol1 {left: var(--mobile-padding-inactive);}
+    html:hover #ol1, html:hover #ol2, html:hover #ol3 {
+        top: var(--mobile-padding);
+        transition: all var(--hud_transition_in) ease;}
+    html:hover #ol3, html:hover #ol4, html:hover #ol5 {
+        right: var(--mobile-padding);
+        transition: all var(--hud_transition_in) ease;}
+    html:hover #ol5, html:hover #ol6 {
+        bottom: var(--mobile-padding);
+        transition: all var(--hud_transition_in) ease;}
+    html:hover #ol6, html:hover #ol7, html:hover #ol1 {
+        left: var(--mobile-padding);
+        transition: all var(--hud_transition_in) ease;}
     .badge-container{
         padding-bottom: 2em;
     }
