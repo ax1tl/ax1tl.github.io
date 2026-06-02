@@ -224,6 +224,9 @@ html::-webkit-scrollbar{
     html{
         background-position: fixed;
     }
+    h1{
+       padding: 0.5em 0em 0em 0.5em; 
+    }
     #grain_texture, #noise_texture{
         scale: 1.25;
     }
