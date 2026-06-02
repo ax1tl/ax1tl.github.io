@@ -189,7 +189,7 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     border-left: 10px solid #fff0;
     box-shadow: -2px 0px 0px #fff, -4px 0px 0px #fff3;
 
-    text-shadow: 0px 0px 10px;
+    text-shadow: 0px 0px 10px #fff8;
 
     transition: all 0.25s ease;
 }
