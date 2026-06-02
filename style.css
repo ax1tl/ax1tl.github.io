@@ -169,7 +169,7 @@ html::-webkit-scrollbar{
     transition: all 0.5s;
 }
 .badge-container:hover img{
-    filter: blur(1px) opacity(0.5);
+    filter: blur(0.5px) opacity(0.75);
     transition: all 0.5s;
 }
 .badges img:hover{
@@ -253,8 +253,11 @@ html::-webkit-scrollbar{
     #ol3, #ol4, #ol5 {right: var(--mobile-padding);}
     #ol5, #ol6 {bottom: var(--mobile-padding);}
     #ol6, #ol7, #ol1 {left: var(--mobile-padding);}
+    .badge-container{
+        padding-bottom: 2em;
+    }
     #version {
-        display: none;
+        position: fixed;
     }
     
 }
