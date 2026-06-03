@@ -1,0 +1,113 @@
+<link href="style.css" rel="stylesheet" type="text/css" media="all">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Bytesized&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<html>
+    <head>
+        <title>ax1tl.directory</title>
+        <link rel="icon" type="image/png" href="images/ico.ico"/>
+
+        <!-- titl -->
+        <meta property="og:title" content="ax1tl.online" />
+
+        <!-- description -->
+        <meta property="og:description" content="go make music." />
+
+        <!-- main url -->
+        <meta property="og:url" content="https://ax1tl.online/" />
+
+        <!-- pictur -->
+        <meta property="og:image" content="https://ax1tl.online/images/icon.png" />
+
+        <!-- colurojkshfbsjdfgf -->
+        <meta name="theme-color" content="#ff4422" />
+    </head>
+    
+    <div class="overlay">
+        <img src="images/texture 3.jpg" id="grain_texture">
+        <canvas id="noise_texture"></canvas>
+        <img src="images/overlay1.png" class="hud_overlay" id="ol1">
+        <img src="images/overlay2.png" class="hud_overlay" id="ol2">
+        <img src="images/overlay3.png" class="hud_overlay" id="ol3">
+        <img src="images/overlay4.png" class="hud_overlay" id="ol4">
+        <img src="images/overlay5.png" class="hud_overlay" id="ol5">
+        <img src="images/overlay6.png" class="hud_overlay" id="ol6">
+        <img src="images/overlay7.png" class="hud_overlay" id="ol7">
+    </div>
+
+    <body>
+        <div class="inwrap">
+            <h1>
+                ax1tl<a href="index.html" id="online_tag">.home</a>
+                <div id="tagline">go make music.</div>
+            </h1>
+            <div class="directory_parent">
+                <div class="side_1"></div>
+
+                <div class="directory_list">
+                    <p class="sb_header">:Directory</p>
+                    <div class="sb_link_container"><a href="colorpage/index.html" class="sb_link" target="_blank">/colorpage/index.html</a></div>
+                    <div class="sb_link_container"><a href="fools/f33c2ac.html" class="sb_link" target="_blank">/fools/f33c2ac.html</a></div>
+                    <div class="sb_link_container"><a href="fools/index.html" class="sb_link" target="_blank">/fools/index.html</a></div>
+                    <div class="sb_link_container"><a href="notepad/markdown test.html" class="sb_link" target="_blank">/notepad/markdown_test.html</a></div>
+                    <div class="sb_link_container"><a href="notepad/notepad.html" class="sb_link" target="_blank">/notepad/notepad.html</a></div>
+                    <div class="sb_link_container"><a href="alphabet-translator.html" class="sb_link" target="_blank">/alphabet_translator.html</a></div>
+                    <div class="sb_link_container"><a href="directory.html" class="sb_link" target="_blank">/directory.html</a></div>
+                    <div class="sb_link_container"><a href="index.html" class="sb_link" target="_blank">/index.html</a></div>
+                    <div class="sb_link_container" id="big"><a href="is_the_1f1t_discord_still_up.html" class="sb_link" target="_blank">/is_the_1f1t_discord_still_up.html</a></div>
+                    <div class="sb_link_container"><a href="sur_pinky.html" class="sb_link" target="_blank">/sur_pinky.html</a></div>
+                    <div class="sb_link_container"><a href="unicode.html" class="sb_link" target="_blank">/unicode.html</a></div>
+                </div>
+
+                <div class="side_2"></div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        const canvas = document.getElementById('noise_texture');
+        const ctx = canvas.getContext('2d');
+        const scale = 1;
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth/scale;
+          canvas.height = window.innerHeight/scale;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function generateNoise() {
+          const imgData = ctx.createImageData(canvas.width, canvas.height);
+          const data = imgData.data;
+        
+          for (let i = 0; i < data.length; i += 4) {
+            data[i]     = Math.floor(Math.random() * 255);  // red
+            data[i + 1] = Math.floor(Math.random() * 255);  // green
+            data[i + 2] = Math.floor(Math.random() * 255);  // blue
+            data[i + 3] = 100;                              // alpha
+          }
+
+          ctx.putImageData(imgData, 0, 0);
+          setTimeout(() => {
+            requestAnimationFrame(generateNoise);
+          }, 10);
+        }
+
+        generateNoise();
+
+
+        function copyToClipboard(text) {
+			const el = document.createElement('textarea');
+			el.value = text;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+		}
+    </script>
+    <div id="version">built with love - version 6.2.8</div>
+</html>
