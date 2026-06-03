@@ -241,6 +241,7 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
 }
 .badges a{
     color: #0000;
+    background-color: #0000;
 }
 .badges img{
     box-shadow: 0px 0px 20px #fff0;
