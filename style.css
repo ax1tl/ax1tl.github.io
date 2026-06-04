@@ -229,6 +229,15 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
 .main_latest{
     grid-column: span 1 / span 1;
 }
+/* Automatically switches when Dark Mode is active */
+@media (prefers-color-scheme: dark) {
+    #bandcamp_main_latest {
+        background-color: #303030;
+    }
+}
+#bandcamp_main_latest {
+    background-color: #fff;
+}
 .main_early{
     grid-column: span 1 / span 1;
 }
