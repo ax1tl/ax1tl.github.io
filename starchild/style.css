@@ -123,7 +123,7 @@ a:hover{
 
     position: fixed;
     left: calc(25%);
-    top: 51%;
+    top: 52%;
     height: 4px;
     width: 50%;
     background-color: #fff2;
@@ -133,7 +133,7 @@ a:hover{
 }
 
 .seek:hover{
-    top: calc(51% - 2px);
+    top: calc(52% - 2px);
     height: 8px;
 
     transition: all 0.25s ease;
@@ -148,6 +148,17 @@ a:hover{
     overflow: hidden;
     background-color: #fff;
 }
+
+.seek::-webkit-slider-thumb{
+    width: 4px;
+    height: 16px;
+
+    border: 0px solid #fff0;
+    box-shadow: -1000px 0px 0px 1000px #fff;
+    overflow: hidden;
+    background-color: #fff;
+}
+
 
 
 #version {
@@ -195,5 +206,32 @@ a:hover{
 
         overflow: hidden;
         transition: all 0.25s ease;
+    }
+
+    .seek:hover{
+        top: calc(54% - 0px);
+        height: 16px;
+
+        transition: all 0.25s ease;
+    }
+
+    .seek::-moz-range-thumb {
+        width: 4px;
+        height: 16px;
+
+        border: 0px solid #fff0;
+        box-shadow: -1000px 0px 0px 1000px #fff;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .seek::-webkit-slider-thumb{
+        width: 4px;
+        height: 16px;
+
+        border: 0px solid #fff0;
+        box-shadow: -1000px 0px 0px 1000px #fff;
+        overflow: hidden;
+        background-color: #fff;
     }
 }
