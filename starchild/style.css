@@ -181,4 +181,19 @@ a:hover{
     h1{
        padding: 0.5em 0em 0em 0.5em; 
     }
+
+    .seek{
+        -webkit-appearance: none;
+        appearance: none;
+
+        position: fixed;
+        left: calc(25%);
+        top: 54%;
+        height: 16px;
+        width: 50%;
+        background-color: #fff2;
+
+        overflow: hidden;
+        transition: all 0.25s ease;
+    }
 }
