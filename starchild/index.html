@@ -26,11 +26,71 @@
     <body>
         <div class="inwrap">
             <h1>
-                star<a href="index.html" id="child_tag">.child</a>
+                star<a href="https://ax1tl.online" id="child_tag">.child</a>
                 <div id="tagline">worlds apart.</div>
             </h1>
+
+
+            <div class="audio-player">
+                <button id="demo_button" class="playPause">.demo</button>
+                <audio src="music/demo.mp3"></audio>
+                <div class="controls">
+                    <input class="seek" type="range" value="0" min="0" step="0.01">
+                </div>
+            </div>
+
         </div>
     </body>
 
-    <div id="version">built with love - version 0.0.0</div>
+    <script>
+        // Store all audio elements for volume control
+        const allAudios = [];
+        const allPlayPause = [];
+
+        function initializeAudioPlayer(container) {
+            const audio = container.querySelector('audio');
+            const playPause = container.querySelector('.playPause');
+            const seekBar = container.querySelector('.seek');
+            
+            // Keep track of this audio for master volume
+            allAudios.push(audio);
+            allPlayPause.push(playPause);
+
+
+            function togglePlayPause() {
+                if (audio.paused) {
+                    allAudios.forEach(function(audioin){
+                        audioin.pause();
+                    });
+                    allPlayPause.forEach(function(playPausein){
+                        playPausein.textContent = '.demo';
+                    });
+                    audio.volume = 0.75;
+                    audio.play();
+                    playPause.textContent = ':demo';
+                } else {
+                    audio.pause();
+                    playPause.textContent = '.demo';
+                }
+            }
+                        
+            function updateSeekBar() {
+                seekBar.max = audio.duration;
+                seekBar.value = audio.currentTime;
+            }
+            
+            function seekAudio() {
+                audio.currentTime = seekBar.value;
+            }
+            
+            playPause.addEventListener('click', togglePlayPause);
+            audio.addEventListener('timeupdate', updateSeekBar);
+            seekBar.addEventListener('input', seekAudio);
+        }
+                    
+                    // Initialize all players
+                    document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
+                </script>
+
+    <div id="version">built with love - version 1.0.0</div>
 </html>

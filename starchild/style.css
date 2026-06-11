@@ -16,7 +16,7 @@
     --work_height: calc(100vh-(var(--master-padding)*2));
 
     --white: #fff;
-    --blue: rgb(34, 211, 255);
+    --blue: #67f;
     --black: #223;
 
     --hud_transition_in: 0.5s;
@@ -32,7 +32,7 @@ html{
     scrollbar-width: none;
     font-family: 'JetBrains Mono', monospace;
     background-color: #000;
-    background-image: url('images/bg.png');
+    background-image: url('images/starchild.png');
     background-position: center;
     filter: blur(0.6px);
 }
@@ -87,6 +87,66 @@ a:hover{
     color: #223;
 
     transition: all 0.25s ease;
+}
+
+#demo_button{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32;
+    color: #fff;
+    background-color: #0000;
+    border: none;
+    border-left: solid 0px #fff0;
+
+    position: fixed;
+    left: calc(50% - 60px);
+    top: 45%;
+    
+    transition: all 0.25s;
+}
+#demo_button:hover{
+    text-shadow: 10px;
+    border-left: solid 4px #fff;
+    left: calc(50% - 64px);
+    transition: all 0.25s;
+}
+
+#demo_button:active{
+    text-shadow: 10px;
+    border-left: solid 8px #fff;
+    left: calc(50% - 68px);
+    transition: all 0.05s;
+}
+
+.seek{
+    -webkit-appearance: none;
+    appearance: none;
+
+    position: fixed;
+    left: calc(25%);
+    top: 51%;
+    height: 4px;
+    width: 50%;
+    background-color: #fff2;
+
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.seek:hover{
+    top: calc(51% - 2px);
+    height: 8px;
+
+    transition: all 0.25s ease;
+}
+
+.seek::-moz-range-thumb {
+    width: 4px;
+    height: 8px;
+
+    border: 0px solid #fff0;
+    box-shadow: -1000px 0px 0px 1000px #fff;
+    overflow: hidden;
+    background-color: #fff;
 }
 
 
