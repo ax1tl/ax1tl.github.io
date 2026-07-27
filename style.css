@@ -276,7 +276,7 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
     transition: all 0.5s;
 }
 .badge-container:hover img{
-    filter: blur(0.5px) opacity(0.75);
+    filter: blur(1px) opacity(0.5);
     transition: all 0.5s;
 }
 .badges img:hover{
