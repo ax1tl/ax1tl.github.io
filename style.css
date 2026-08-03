@@ -32,9 +32,11 @@ html{
     scrollbar-width: none;
     font-family: 'JetBrains Mono', monospace;
     background-color: #000;
-    background-image: url('images/bg3.jpg');
+    background-image: url('images/bg4.png');
     background-position: center;
+    background-size: cover;
     filter: blur(0.6px);
+    /* grayscale(1) sepia(0.2) hue-rotate(40deg) */
 }
 #tagline{
     font-size: 0.5em;
