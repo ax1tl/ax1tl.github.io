@@ -186,6 +186,9 @@ a:hover{
         grid-template-rows: repeat(1, 1fr);
         gap: 2em;
     }
+    .lyrics{
+        display: none;
+    }
 }
 
 @media (max-width: 930px) {
@@ -242,5 +245,9 @@ a:hover{
         box-shadow: -1000px 0px 0px 1000px #fff;
         overflow: hidden;
         background-color: #fff;
+    }
+
+    .lyrics{
+        display: none;
     }
 }

@@ -37,21 +37,27 @@
                 <div class="controls">
                     <input class="seek" type="range" value="0" min="0" step="0.01">
                 </div>
+                <div style="font-size: small; text-align: right;">
+                    vol
+                    <br>
+                    <input id="vol" type="range" value="75" min="0" step="0.01">
+                </div>
             </div>
-
-            <br>ill search for your face in cards that are in play
-            <br>its a joke that i know you will laugh at in time
-            <br>i hope you make me, by design, a bit more than kind 
-            <br>a human that's flawed in my design
-            <br>
-            <br>oh ill search for your face in cards that are in play
-            <br>its a joke that i know you will laugh at in time
-            <br>i hope you make me, by design, a bit more than kind 
-            <br>a human that's flawed in my design
-            <br>
-            <br>to be more than kind
-            <br>I'm out of time
-            <br>you will find
+            <div class="lyrics">
+                ill search for your face in cards that are in play
+                <br>its a joke that i know you will laugh at in time
+                <br>i hope you make me, by design, a bit more than kind 
+                <br>a human that's flawed in my design
+                <br>
+                <br>oh ill search for your face in cards that are in play
+                <br>its a joke that i know you will laugh at in time
+                <br>i hope you make me, by design, a bit more than kind 
+                <br>a human that's flawed in my design
+                <br>
+                <br>to be more than kind
+                <br>I'm out of time
+                <br>you will find
+            </div>
 
         </div>
     </body>
@@ -65,6 +71,7 @@
             const audio = container.querySelector('audio');
             const playPause = container.querySelector('.playPause');
             const seekBar = container.querySelector('.seek');
+            const volumeBar = document.getElementById('vol');
             const tagline = document.getElementById('tagline');
             
             // Keep track of this audio for master volume
@@ -80,7 +87,6 @@
                     allPlayPause.forEach(function(playPausein){
                         playPausein.textContent = '.play';
                     });
-                    audio.volume = 0.75;
                     audio.play();
                     playPause.textContent = ':pause';
                 } else {
@@ -88,6 +94,10 @@
                     playPause.textContent = '.play';
                 }
             }
+
+            volumeBar.addEventListener('input', function() {
+                audio.volume = this.value/100; 
+            });
                         
             function updateSeekBar() {
                 seekBar.max = audio.duration;
