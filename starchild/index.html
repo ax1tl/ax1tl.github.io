@@ -33,7 +33,7 @@
 
             <div class="audio-player">
                 <button id="demo_button" class="playPause">.play</button>
-                <audio src="music/pwc2.mp3"></audio>
+                <audio src="music/demo.mp3"></audio>
                 <div class="controls">
                     <input class="seek" type="range" value="0" min="0" step="0.01">
                 </div>
@@ -79,7 +79,7 @@
                 seekBar.max = audio.duration;
                 seekBar.value = audio.currentTime;
                 updateFill();
-                tagline.textContent = `producer world cup ${formatTime(audio.currentTime)}`;
+                tagline.textContent = `worlds apart. ${formatTime(audio.currentTime)}`;
             }
 
             function formatTime(seconds) {
@@ -107,5 +107,5 @@
             document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
         </script>
 
-    <div id="version">built with love - version 1.1.0</div>
+    <div id="version">built with love - version 1.1.1</div>
 </html>
