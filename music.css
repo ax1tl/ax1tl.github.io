@@ -1,0 +1,306 @@
+:root{
+    --window: 100vw;
+    --window_height: 100vh;
+    --master-padding: 5em;
+    --mobile-margin: 0%;
+    --mobile-padding: 0.25em;
+    --mobile-padding-inactive: 1em;
+
+    --text: #fff;
+    --tagline_text: #fff8;
+    --sb_header: #fffa;
+    --sb_link: #fff;
+
+    --sb_link_hover: #0002;
+    --sb_size: calc((var(--window)-(var(--master-padding)*2))/5);
+    --work_height: calc(100vh-(var(--master-padding)*2));
+
+    --white: #fff;
+    --blue: #f42;
+    --black: #223;
+
+    --hud_transition_in: 0.5s;
+    --hud_transition_out: 1s;
+}
+
+.electrical-box{
+    transform: translate(36in);
+}
+
+html{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #000;
+    background-image: url('images/bg1.png');
+    filter: blur(0.6px);
+}
+#tagline{
+    font-size: 0.5em;
+    color: var(--tagline_text);
+    font-weight: normal;
+}
+body{
+    margin: 0;
+    padding: var(--master-padding);
+    padding-top: calc(var(--master-padding) - 1.5em);
+    width: calc(var(--window)-(var(--master-padding)*2));
+    overflow-x: hidden;
+    color: var(--text);
+}
+.inwrap{
+    background-color: #0000;
+}
+
+html::-webkit-scrollbar{
+    display: none;
+}
+
+*::selection{
+    background-color: #fff2;
+    text-shadow: 0px 0px 10px;
+}
+.line{
+    border-top: 1px solid #fff3;
+    margin: 1em 0em;
+}
+
+a:link{
+    color: var(--blue);
+    background-color: #f420;
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: all 0.25s ease;
+}
+a:visited{
+    color: var(--blue);
+    background-color: #f420;
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: all 0.25s ease;
+}
+a:hover{
+    background-color: var(--blue);
+    color: #223;
+
+    transition: all 0.25s ease;
+}
+
+#demo_button{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32;
+    color: #fff;
+    background-color: #0000;
+    border: none;
+    border-left: solid 0px #fff0;
+
+    position: fixed;
+    left: calc(50% - 60px);
+    top: 45%;
+    
+    transition: all 0.25s;
+}
+#demo_button:hover{
+    text-shadow: 10px;
+    border-left: solid 4px #fff;
+    left: calc(50% - 64px);
+    transition: all 0.25s;
+}
+
+#demo_button:active{
+    text-shadow: 10px;
+    border-left: solid 8px #fff;
+    left: calc(50% - 68px);
+    transition: all 0.05s;
+}
+
+#time{
+    position: fixed;
+    left: calc(75% + 16px);
+    top: 51.8%;
+    font-size: small;
+    color: #fff8;
+}
+
+.seek{
+    -webkit-appearance: none;
+    appearance: none;
+
+    position: fixed;
+    left: calc(25%);
+    top: 52%;
+    height: 8px;
+    width: 50%;
+
+    --fill: 0%;
+    background: linear-gradient(to right, #fff 0%, #fff var(--fill), #fff2 var(--fill), #fff2 100%);
+    box-shadow: #fff1 0px 0px 10px 0px;
+    transition: all 0.25s ease;
+}
+.seek:hover{
+    top: calc(52% - 4px);
+    height: 16px;
+    transition: all 0.25s ease;
+}
+.seek::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 8px;
+    border: none;
+}
+.seek::-moz-range-track {
+    background: transparent;
+    height: 8px;
+    border: none;
+}
+.seek::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 0px;
+    height: 0px;
+    background-color: #fff;
+    border: none;
+}
+.seek::-moz-range-thumb {
+    width: 0px;
+    height: 0px;
+    background-color: #fff;
+    border: none;
+}
+
+#vol {
+    -webkit-appearance: none;
+    appearance: none;
+
+    position: fixed;
+    left: calc(25% - 2px);
+    top: 54.25%;
+    height: 8px;
+    width: 12em;
+    background: transparent;
+    filter: drop-shadow(0px 0px 2px #fff8);
+
+    --fill: 70%; /* or whatever the initial volume is, e.g. 0.75 * 100 */
+    transition: all 0.25s ease;
+}
+#vol::-webkit-slider-runnable-track, #vol::-moz-range-track {
+    height: 12px;
+    background: linear-gradient(to right,
+        #fff 0%, #fff var(--fill),
+        #fff3 var(--fill), #fff3 100%);
+
+    -webkit-mask-image: radial-gradient(circle, #000 45%, transparent 46%);
+    mask-image: radial-gradient(circle, #000 45%, transparent 46%);
+    -webkit-mask-size: 10% 100%;
+    mask-size: 10% 100%;
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    border: none;
+}
+#vol::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+}
+#vol::-moz-range-thumb {
+    width: 0px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+}
+
+
+
+#version {
+    position: fixed;
+    left: 1.5em;
+    bottom: 1.1em;
+    z-index: -10;
+    color: #fff3;
+}
+
+
+@media (max-width: 1390px) {
+    .parent {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        gap: 2em;
+    }
+    .lyrics{
+        display: none;
+    }
+}
+
+@media (max-width: 930px) {
+    :root{
+        --window: 100vw;
+        --master-padding: 1.5em;
+        --mobile-margin: 5%;
+        --mobile-margin-inactive: 7%;
+    }
+    html{
+        background-position: fixed;
+    }
+    h1{
+       padding: 0.5em 0em 0em 0.5em; 
+    }
+
+    .seek{
+        -webkit-appearance: none;
+        appearance: none;
+
+        position: fixed;
+        left: calc(25%);
+        top: 54%;
+        height: 16px;
+        width: 50%;
+        background-color: #fff2;
+
+        overflow: hidden;
+        transition: all 0.25s ease;
+    }
+
+    .seek:hover{
+        top: calc(54% - 0px);
+        height: 16px;
+
+        transition: all 0.25s ease;
+    }
+
+    .seek::-moz-range-thumb {
+        width: 4px;
+        height: 16px;
+
+        border: 0px solid #fff0;
+        box-shadow: -1000px 0px 0px 1000px #fff;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .seek::-webkit-slider-thumb{
+        width: 4px;
+        height: 16px;
+
+        border: 0px solid #fff0;
+        box-shadow: -1000px 0px 0px 1000px #fff;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    #vol {
+        top: 58%;
+
+        transition: all 0.25s ease;
+    }
+
+    .lyrics{
+        display: none;
+    }
+}

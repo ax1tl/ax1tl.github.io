@@ -1,0 +1,123 @@
+<link href="../music.css" rel="stylesheet" type="text/css" media="all">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Bytesized&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<html>
+    <head>
+        <title>ax1tl.home</title>
+        <link rel="icon" type="image/png" href="images/ico.ico"/>
+
+        <!-- titl -->
+        <meta property="og:title" content="happy jam.mp3" />
+        <!-- description -->
+        <meta property="og:description" content="make something, create anything. art is human. " />
+        <!-- main url -->
+        <meta property="og:url" content="https://ax1tl.online/" />
+        <!-- pictur -->
+        <meta property="og:image" content="https://ax1tl.online/images/icon.png" />
+        <!-- colurojkshfbsjdfgf -->
+        <meta name="theme-color" content="#ff4422" />
+    </head>
+
+    <body>
+        <div class="inwrap">
+            <h1>
+                axo<a href="https://ax1tl.online" id="child_tag">.music</a>
+                <div id="tagline">happy jam.mp3</div>
+                <br>
+            </h1>
+            
+            <div class="audio-player">
+                <button id="demo_button" class="playPause">.play</button>
+                <audio src="happy jam.mp3"></audio>
+                <div class="controls">
+                    <input class="seek" type="range" value="0" min="0" step="0.01">
+                    <div class="volume" style="font-size: small; text-align: right;">
+                        <input id="vol" type="range" value="70" min="0" step="10">
+                    </div>
+                    <div class="info" id="time">0:00</div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+    <script>
+        // Store all audio elements for volume control
+        const allAudios = [];
+        const allPlayPause = [];
+
+        function initializeAudioPlayer(container) {
+            const audio = container.querySelector('audio');
+            const playPause = container.querySelector('.playPause');
+            const seekBar = container.querySelector('.seek');
+            const volumeBar = document.getElementById('vol');
+            const time = document.getElementById('time');
+            
+            // Keep track of this audio for master volume
+            allAudios.push(audio);
+            allPlayPause.push(playPause);
+
+
+            function togglePlayPause() {
+                if (audio.paused) {
+                    allAudios.forEach(function(audioin){
+                        audioin.pause();
+                    });
+                    allPlayPause.forEach(function(playPausein){
+                        playPausein.textContent = '.play';
+                    });
+                    audio.play();
+                    playPause.textContent = ':pause';
+                } else {
+                    audio.pause();
+                    playPause.textContent = '.play';
+                }
+            }
+
+            volumeBar.addEventListener('input', updateVolume);
+
+            function updateVolume() {
+                audio.volume = volumeBar.value/100;
+                volumeBar.style.setProperty('--fill', (volumeBar.value) + '%');
+            }
+
+                        
+            function updateSeekBar() {
+                seekBar.max = audio.duration;
+                seekBar.value = audio.currentTime;
+                updateFill();
+                time.textContent = `${formatTime(audio.currentTime)}`;
+            }
+
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+            }
+
+            function seekAudio() {
+                audio.currentTime = seekBar.value;
+                updateFill();
+            }
+
+            function updateFill() {
+                const percent = (seekBar.value / seekBar.max) * 100 || 0;
+                seekBar.style.setProperty('--fill', percent + '%');
+            }
+            
+            playPause.addEventListener('click', togglePlayPause);
+            audio.addEventListener('timeupdate', updateSeekBar);
+            seekBar.addEventListener('input', seekAudio);
+        }
+                    
+            // Initialize all players
+            document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
+        </script>
+
+    <div id="version">built with love - version 1.0.0</div>
+</html>
