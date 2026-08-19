@@ -33,7 +33,6 @@ html{
     font-family: 'JetBrains Mono', monospace;
     background-color: #000;
     background-image: url('images/starchild.png');
-    background-position: center;
     filter: blur(0.6px);
 }
 #tagline{
@@ -117,6 +116,14 @@ a:hover{
     transition: all 0.05s;
 }
 
+#time{
+    position: fixed;
+    left: calc(75% + 16px);
+    top: 51.8%;
+    font-size: small;
+    color: #fff8;
+}
+
 .seek{
     -webkit-appearance: none;
     appearance: none;
@@ -129,16 +136,14 @@ a:hover{
 
     --fill: 0%;
     background: linear-gradient(to right, #fff 0%, #fff var(--fill), #fff2 var(--fill), #fff2 100%);
-
+    box-shadow: #fff1 0px 0px 10px 0px;
     transition: all 0.25s ease;
 }
-
 .seek:hover{
     top: calc(52% - 4px);
     height: 16px;
     transition: all 0.25s ease;
 }
-
 .seek::-webkit-slider-runnable-track {
     -webkit-appearance: none;
     appearance: none;
@@ -146,13 +151,11 @@ a:hover{
     height: 8px;
     border: none;
 }
-
 .seek::-moz-range-track {
     background: transparent;
     height: 8px;
     border: none;
 }
-
 .seek::-webkit-slider-thumb{
     -webkit-appearance: none;
     width: 0px;
@@ -160,10 +163,54 @@ a:hover{
     background-color: #fff;
     border: none;
 }
-
 .seek::-moz-range-thumb {
     width: 0px;
     height: 0px;
+    background-color: #fff;
+    border: none;
+}
+
+#vol {
+    -webkit-appearance: none;
+    appearance: none;
+
+    position: fixed;
+    left: calc(25% - 2px);
+    top: 54.25%;
+    height: 8px;
+    width: 12em;
+    background: transparent;
+    filter: drop-shadow(0px 0px 2px #fff8);
+
+    --fill: 70%; /* or whatever the initial volume is, e.g. 0.75 * 100 */
+    transition: all 0.25s ease;
+}
+#vol::-webkit-slider-runnable-track, #vol::-moz-range-track {
+    height: 12px;
+    background: linear-gradient(to right,
+        #fff 0%, #fff var(--fill),
+        #fff3 var(--fill), #fff3 100%);
+
+    -webkit-mask-image: radial-gradient(circle, #000 45%, transparent 46%);
+    mask-image: radial-gradient(circle, #000 45%, transparent 46%);
+    -webkit-mask-size: 10% 100%;
+    mask-size: 10% 100%;
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    border: none;
+}
+#vol::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+}
+#vol::-moz-range-thumb {
+    width: 0px;
+    height: 8px;
+    border-radius: 50%;
     background-color: #fff;
     border: none;
 }
@@ -245,6 +292,12 @@ a:hover{
         box-shadow: -1000px 0px 0px 1000px #fff;
         overflow: hidden;
         background-color: #fff;
+    }
+
+    #vol {
+        top: 58%;
+
+        transition: all 0.25s ease;
     }
 
     .lyrics{
