@@ -1,4 +1,4 @@
-<link href="../music.css" rel="stylesheet" type="text/css" media="all">
+<link href="/music.css" rel="stylesheet" type="text/css" media="all">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -8,18 +8,18 @@
 
 <html>
     <head>
-        <title>happy jam.mp3</title>
-        <link rel="icon" type="image/png" href="images/ico.ico"/>
+        <title>{{TITLE}}</title>
+        <link rel="icon" type="image/png" href="/images/ico.ico"/>
 
-        <!-- titl -->
-        <meta property="og:title" content="happy jam.mp3" />
+        <!-- title -->
+        <meta property="og:title" content="{{TITLE}}" />
         <!-- description -->
-        <meta property="og:description" content="make something, create anything. art is human. " />
+        <meta property="og:description" content="{{DESCRIPTION}}" />
         <!-- main url -->
-        <meta property="og:url" content="https://ax1tl.online/" />
-        <!-- pictur -->
-        <meta property="og:image" content="https://ax1tl.online/images/icon.png" />
-        <!-- colurojkshfbsjdfgf -->
+        <meta property="og:url" content="{{OG_URL}}" />
+        <!-- picture -->
+        <meta property="og:image" content="{{OG_IMAGE}}" />
+        <!-- color -->
         <meta name="theme-color" content="#ff4422" />
     </head>
 
@@ -27,13 +27,13 @@
         <div class="inwrap">
             <h1>
                 axo<a href="https://ax1tl.online" id="child_tag">.music</a>
-                <div id="tagline">happy jam.mp3</div>
+                <div id="tagline">{{TITLE}}</div>
                 <br>
             </h1>
-            
+
             <div class="audio-player">
                 <button id="demo_button" class="playPause">.play</button>
-                <audio src="happy jam.mp3"></audio>
+                <audio src="{{AUDIO_SRC}}"></audio>
                 <div class="controls">
                     <input class="seek" type="range" value="0" min="0" step="0.01">
                     <div class="volume" style="font-size: small; text-align: right;">
@@ -57,7 +57,7 @@
             const seekBar = container.querySelector('.seek');
             const volumeBar = document.getElementById('vol');
             const time = document.getElementById('time');
-            
+
             // Keep track of this audio for master volume
             allAudios.push(audio);
             allPlayPause.push(playPause);
@@ -86,7 +86,7 @@
                 volumeBar.style.setProperty('--fill', (volumeBar.value) + '%');
             }
 
-                        
+
             function updateSeekBar() {
                 seekBar.max = audio.duration;
                 seekBar.value = audio.currentTime;
@@ -109,12 +109,12 @@
                 const percent = (seekBar.value / seekBar.max) * 100 || 0;
                 seekBar.style.setProperty('--fill', percent + '%');
             }
-            
+
             playPause.addEventListener('click', togglePlayPause);
             audio.addEventListener('timeupdate', updateSeekBar);
             seekBar.addEventListener('input', seekAudio);
         }
-                    
+
             // Initialize all players
             document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
         </script>
