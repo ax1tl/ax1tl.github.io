@@ -116,14 +116,6 @@ a:hover{
     transition: all 0.05s;
 }
 
-#time{
-    position: fixed;
-    left: calc(75% + 16px);
-    top: 51.8%;
-    font-size: small;
-    color: #fff8;
-}
-
 .seek{
     -webkit-appearance: none;
     appearance: none;
@@ -170,19 +162,36 @@ a:hover{
     border: none;
 }
 
+#time{
+    position: fixed;
+    left: calc(75% + 16px);
+    top: calc(52% - 2px);
+    font-size: small;
+    color: #fff8;
+
+    transition: all 0.25s ease;
+}
+
 #vol {
     -webkit-appearance: none;
     appearance: none;
 
     position: fixed;
-    left: calc(25% - 2px);
-    top: 54.25%;
+    left: calc(25% + 28px);
+    top: calc(52% + 24px);
     height: 8px;
     width: 12em;
     background: transparent;
     filter: drop-shadow(0px 0px 2px #fff8);
 
     --fill: 70%; /* or whatever the initial volume is, e.g. 0.75 * 100 */
+    transition: all 0.25s ease;
+}
+#volumeLabel {
+    position: fixed;
+    left: calc(25% + 3px);
+    top: calc(52% + 22px);
+
     transition: all 0.25s ease;
 }
 #vol::-webkit-slider-runnable-track, #vol::-moz-range-track {
@@ -294,8 +303,25 @@ a:hover{
         background-color: #fff;
     }
 
+    #time{
+        position: fixed;
+        left: calc(75% + 16px);
+        top: calc(54% + 2px);
+        font-size: small;
+        color: #fff8;
+
+        transition: all 0.25s ease;
+    }
+
     #vol {
-        top: 58%;
+        top: calc(54% + 32px);
+
+        transition: all 0.25s ease;
+    }
+    #volumeLabel {
+        position: fixed;
+        left: calc(25% + 3px);
+        top: calc(54% + 29px);
 
         transition: all 0.25s ease;
     }

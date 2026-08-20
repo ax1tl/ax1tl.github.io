@@ -5,5 +5,12 @@
     "description": "make something, create anything. art is human.",
     "audio": "/audio/happy jam.mp3",
     "image": "/images/icon.png"
+  },
+  {
+    "slug": "loop",
+    "title": "loop.wav",
+    "description": "a simple loop for testing purposes.",
+    "audio": "/audio/loop.wav",
+    "image": "/images/icon.png"
   }
 ]
