@@ -182,7 +182,7 @@ a:hover{
     height: 8px;
     width: 12em;
     background: transparent;
-    filter: drop-shadow(0px 0px 2px #fff8);
+    filter: drop-shadow(0px 0px 2px #fff4);
 
     --fill: 70%; /* or whatever the initial volume is, e.g. 0.75 * 100 */
     transition: all 0.25s ease;
