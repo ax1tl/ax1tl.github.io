@@ -126,9 +126,9 @@ a:hover{
     height: 8px;
     width: 50%;
 
-    --fill: 0%;
+    --fill: 50%;
     background: linear-gradient(to right, #fff 0%, #fff var(--fill), #fff2 var(--fill), #fff2 100%);
-    box-shadow: #fff1 0px 0px 10px 0px;
+    box-shadow: #fff2 0px 0px 10px 0px ;
     transition: all 0.25s ease;
 }
 .seek:hover{
