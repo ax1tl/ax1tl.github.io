@@ -18,9 +18,26 @@
         <!-- main url -->
         <meta property="og:url" content="https://ax1tl.online/listen/happy-jam/" />
         <!-- picture -->
-        <meta property="og:image" content="https://ax1tl.online/images/icon.png" />
+        <meta property="og:image" content="https://ax1tl.online/images/bg1.png" />
         <!-- color -->
         <meta name="theme-color" content="#ff4422" />
+
+        <style>
+            .bg-blur {
+                position: fixed;
+                top: -30px;
+                left: -30px;
+                right: -30px;
+                bottom: -30px;
+                background-image: url('/images/bg1.png');
+                background-size: cover;
+                background-position: center;
+                filter: blur(40px);
+                transform: scale(1.15);
+                z-index: -1;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -120,5 +137,5 @@
             document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
         </script>
 
-    <div id="version">built with love - version 1.0.5</div>
+    <div id="version">built with love - version 1.0.6</div>
 </html>
