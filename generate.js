@@ -40,13 +40,15 @@ for (const track of tracks) {
   }
 
   const ogUrl = `${SITE_URL}/listen/${slug}/`;
-  const ogImage = image ? `${SITE_URL}${image}` : `${SITE_URL}/images/icon.png`;
+  const imagePath = image || '/images/icon.png'; // site-relative, used for the CSS background
+  const ogImage = `${SITE_URL}${imagePath}`; // full URL, required for social preview cards
 
   const html = template
     .split('{{TITLE}}').join(escapeHtml(title))
     .split('{{DESCRIPTION}}').join(escapeHtml(description || ''))
     .split('{{OG_URL}}').join(ogUrl)
     .split('{{OG_IMAGE}}').join(ogImage)
+    .split('{{IMAGE_PATH}}').join(escapeHtml(imagePath))
     .split('{{AUDIO_SRC}}').join(escapeHtml(audio));
 
   const trackDir = path.join(outDir, slug);
