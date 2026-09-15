@@ -19,5 +19,19 @@
     "description": "as far as i know",
     "audio": "/audio/screenfrost.mp3",
     "image": "/images/cover1.jpeg"
+  },
+  {
+    "slug": "pwc round 3",
+    "title": "pwc round 3.mp3",
+    "description": "round 3 of the producer world cup",
+    "audio": "/audio/pwc round 3.mp3",
+    "image": "/images/bg3.jpg"
+  },
+  {
+    "slug": "kind",
+    "title": "group stage 2.mp3",
+    "description": "translation 1",
+    "audio": "/audio/group stage 2.mp3",
+    "image": "/starchild/images/starchild.png"
   }
 ]
