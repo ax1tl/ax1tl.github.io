@@ -4,6 +4,7 @@
     "title": "happy jam.mp3",
     "description": "make something, create anything. art is human.",
     "audio": "/audio/happy jam.mp3",
+    "version": "1",
     "image": "/images/bg1.png"
   },
   {
@@ -11,6 +12,7 @@
     "title": "loop.wav",
     "description": "a simple loop for testing purposes.",
     "audio": "/audio/loop.wav",
+    "version": "1",
     "image": "/images/bg1.png"
   },
   {
@@ -18,6 +20,7 @@
     "title": "screenfrost.mp3",
     "description": "as far as i know",
     "audio": "/audio/screenfrost.mp3",
+    "version": "1",
     "image": "/images/cover1.jpeg"
   },
   {
@@ -25,6 +28,7 @@
     "title": "pwc round 3.mp3",
     "description": "round 3 of the producer world cup",
     "audio": "/audio/pwc round 3.mp3",
+    "version": "2",
     "image": "/images/bg5.jpg"
   },
   {
@@ -32,6 +36,7 @@
     "title": "group stage 2.mp3",
     "description": "translation 1",
     "audio": "/audio/group stage 2.mp3",
+    "version": "1",
     "image": "/starchild/images/starchild.png"
   }
 ]

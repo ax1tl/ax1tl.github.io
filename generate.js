@@ -9,7 +9,7 @@ const SITE_URL = 'https://ax1tl.online'; // no trailing slash
 const tracksPath = path.join(__dirname, 'tracks.json');
 const templatePath = path.join(__dirname, 'template.html');
 const musicTemplatePath = path.join(__dirname, 'music-template.html');
-const outDir = path.join(__dirname, 'listen');
+const outDir = path.join(__dirname, 'music');
 
 const tracks = JSON.parse(fs.readFileSync(tracksPath, 'utf8'));
 const template = fs.readFileSync(templatePath, 'utf8');
@@ -39,12 +39,13 @@ for (const track of tracks) {
     continue;
   }
 
-  const ogUrl = `${SITE_URL}/listen/${slug}/`;
+  const ogUrl = `${SITE_URL}/music/${slug}/`;
   const imagePath = image || '/images/icon.png'; // site-relative, used for the CSS background
   const ogImage = `${SITE_URL}${imagePath}`; // full URL, required for social preview cards
 
   const html = template
     .split('{{TITLE}}').join(escapeHtml(title))
+    .split('{{VERSION_NUMBER}}').join(escapeHtml(track.version || '1'))
     .split('{{DESCRIPTION}}').join(escapeHtml(description || ''))
     .split('{{OG_URL}}').join(ogUrl)
     .split('{{OG_IMAGE}}').join(ogImage)
@@ -55,7 +56,7 @@ for (const track of tracks) {
   fs.mkdirSync(trackDir, { recursive: true });
   fs.writeFileSync(path.join(trackDir, 'index.html'), html);
 
-  console.log(`Built /listen/${slug}/index.html`);
+  console.log(`Built /music/${slug}/index.html`);
 }
 
 console.log(`\nDone. ${tracks.length} page(s) generated.`);
@@ -66,7 +67,7 @@ const validTracks = tracks.filter(t => t.slug && t.title && t.audio);
 
 const linkLines = validTracks
   .map(track => {
-    const href = `/listen/${track.slug}/`;
+    const href = `/music/${track.slug}/`;
     return `                    <div class="sb_link_container"><a href="${href}" class="sb_link" target="_blank">${escapeHtml(track.title)}</a></div>`;
   })
   .join('\n');

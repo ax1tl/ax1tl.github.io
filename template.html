@@ -17,8 +17,8 @@
         <meta property="og:description" content="{{DESCRIPTION}}" />
         <!-- main url -->
         <meta property="og:url" content="{{OG_URL}}" />
-        <!-- picture -->
-        <meta property="og:image" content="{{OG_IMAGE}}" />
+        <!-- picture 
+        <meta property="og:image" content="{{OG_IMAGE}}" /> -->
         <!-- color -->
         <meta name="theme-color" content="#ff4422" />
 
@@ -45,7 +45,11 @@
         <div class="inwrap">
             <h1>
                 ax1tl<a href="https://ax1tl.online/music" id="child_tag">.music</a>
-                <div id="tagline">{{TITLE}}</div>
+                <div id="tagline">
+                    {{TITLE}}
+                    <br>
+                    <div style="font-size: small;">version {{VERSION_NUMBER}}</div>
+                </div>
                 <br>
             </h1>
 
@@ -138,5 +142,5 @@
             document.querySelectorAll('.audio-player').forEach(initializeAudioPlayer);
         </script>
 
-    <div id="version">built with love - version 1.1.7</div>
+    <div id="version">built with love - version 1.2.0</div>
 </html>
