@@ -32,6 +32,14 @@
     "image": "/images/bg5.jpg"
   },
   {
+    "slug": "toki demo",
+    "title": "toki demo.mp3",
+    "description": "toki shit post for demo",
+    "audio": "/audio/toki demo.mp3",
+    "version": "1",
+    "image": "/images/bg5.jpg"
+  },
+  {
     "slug": "kind",
     "title": "group stage 2.mp3",
     "description": "translation 1",
