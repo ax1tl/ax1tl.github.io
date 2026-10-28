@@ -422,3 +422,141 @@ html:hover #ol6, html:hover #ol7, html:hover #ol1 {
         transition: all 0.25s ease;
     }
 }
+
+/* ======= 404 PAGE ======= */
+
+html:has(.not-found-page) {
+    background-size: cover;
+    background-attachment: fixed;
+    filter: blur(0.6px);
+}
+
+.not-found-page {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+    width: 100%;
+    padding: clamp(1.25em, 5vw, 5em);
+    padding-top: clamp(1.25em, 3.5vw, 3.5em);
+}
+
+.not-found-page .overlay {
+    z-index: 0;
+}
+
+.not-found-page .inwrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.not-found-header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.08em;
+}
+
+.not-found-header #online_tag {
+    letter-spacing: -0.08em;
+}
+
+.not-found-header #tagline {
+    display: block;
+    margin-top: 0.35em;
+    font-size: 0.31em;
+    letter-spacing: 0;
+}
+
+.not-found-main {
+    display: grid;
+    flex: 1;
+    place-items: center;
+    padding: clamp(3em, 10vh, 7em) 0;
+}
+
+.not-found-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(1.5em, 5vw, 4em);
+    width: min(860px, 100%);
+    box-sizing: border-box;
+    padding: clamp(2em, 6vw, 4.5em);
+    overflow: hidden;
+    border-left: 1px solid #fff3;
+    backdrop-filter: blur(12px);
+}
+
+.not-found-number {
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(6rem, 17vw, 11.5rem);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.1em;
+    text-shadow: 0 0 36px #fff2;
+}
+
+.not-found-copy {
+    max-width: 28em;
+}
+
+.not-found-copy h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.65rem, 3.2vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.07em;
+}
+
+.not-found-description {
+    margin: 1em 0 1.6em;
+    color: #fffd;
+    font-size: 0.95em;
+    line-height: 1.8;
+}
+
+#link_404 {
+    translate: -16px 0;
+}
+
+@media (max-width: 650px) {
+    .not-found-page {
+        padding: 1.5em;
+    }
+
+    .not-found-main {
+        padding: 3em 0;
+    }
+
+    .not-found-card {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+        padding: 2em 1.5em 4em;
+    }
+
+    .not-found-number {
+        font-size: clamp(6rem, 29vw, 9rem);
+    }
+
+    .not-found-coordinate {
+        right: 1.5em;
+        bottom: 1.4em;
+        font-size: 0.52em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .not-found-home,
+    .not-found-arrow {
+        transition: none;
+    }
+}

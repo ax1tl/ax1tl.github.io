@@ -25,10 +25,18 @@
   },
   {
     "slug": "pwc round 3",
-    "title": "pwc round 3.mp3",
+    "title": "Paradise by Jack Blom (ax1tl remix)",
     "description": "round 3 of the producer world cup",
-    "audio": "/audio/pwc round 3.mp3",
-    "version": "2",
+    "audio": "/audio/pwc round 3.wav",
+    "version": "5",
+    "image": "/images/bg5.jpg"
+  },
+  {
+    "slug": "toki demo",
+    "title": "toki demo.mp3",
+    "description": "toki shit post for demo",
+    "audio": "/audio/toki demo.mp3",
+    "version": "1",
     "image": "/images/bg5.jpg"
   },
   {
