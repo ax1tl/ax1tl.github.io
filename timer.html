@@ -1,0 +1,384 @@
+<link href="style.css" rel="stylesheet" type="text/css" media="all">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Bytesized&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<html>
+    <head>
+        <title>ax1tl.home</title>
+        <link rel="icon" type="image/png" href="images/ico.ico"/>
+
+        <!-- titl -->
+        <meta property="og:title" content="ax1tl.online" />
+        <!-- description -->
+        <meta property="og:description" content="make something, create anything. art is human. " />
+        <!-- main url -->
+        <meta property="og:url" content="https://ax1tl.online/" />
+        <!-- pictur -->
+        <meta property="og:image" content="https://ax1tl.online/images/icon.png" />
+        <!-- colurojkshfbsjdfgf -->
+        <meta name="theme-color" content="#ff4422" />
+
+        <style>
+            #timer_ui {
+                position: fixed;
+                top: 14px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 99999;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 14px;
+                padding: 4px 8px;
+                color: #fff;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.75rem;
+                opacity: 0.3;
+                transition: opacity 0.25s;
+            }
+            #timer_ui:hover, #timer_ui:focus-within { opacity: 1; }
+            #time_readout { display: none; }   /* clock stays hidden */
+            #time_set { display: flex; align-items: center; gap: 2px; }
+            #time_set input {
+                width: 4ch;
+                padding: 2px;
+                text-align: center;
+                background: transparent;
+                color: inherit;
+                border: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+                font: inherit;
+                -moz-appearance: textfield;
+                appearance: textfield;
+            }
+            #time_set input::-webkit-outer-spin-button,
+            #time_set input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+            #controls { display: flex; gap: 6px; }
+            #controls button {
+                padding: 4px 6px;
+                background: none;
+                color: #fff;
+                border: none;
+                font: inherit;
+                cursor: pointer;
+            }
+            #controls button:hover:not(:disabled) { text-decoration: underline; }
+            #controls button:disabled, #time_set input:disabled { opacity: 0.35; cursor: not-allowed; }
+        </style>
+    </head>
+
+    <script>document.documentElement.classList.add('preload')</script>
+
+    <div class="overlay">
+        <img src="images/texture 3.jpg" id="grain_texture">
+        <canvas id="noise_texture"></canvas>
+        <img src="images/overlay1.png" class="hud_overlay" id="ol1">
+        <img src="images/overlay2.png" class="hud_overlay" id="ol2">
+        <img src="images/overlay3.png" class="hud_overlay" id="ol3">
+        <img src="images/overlay4.png" class="hud_overlay" id="ol4">
+        <img src="images/overlay5.png" class="hud_overlay" id="ol5">
+        <img src="images/overlay6.png" class="hud_overlay" id="ol6">
+        <img src="images/overlay7.png" class="hud_overlay" id="ol7">
+    </div>
+
+    <div id="loader">
+        <svg id="loader_svg">
+            <path id="trail"/>
+            <circle id="trail_head" r="4"/>
+            <circle id="peak_ring" r="14"/>
+            <g id="camps"></g>
+        </svg>
+    </div>
+
+    <div id="timer_ui">
+        <div id="time_readout">04:00</div>
+        <div id="time_set">
+            <input id="set_min" type="number" min="0" max="999" value="4" aria-label="minutes">
+            <span>:</span>
+            <input id="set_sec" type="number" min="0" max="59" value="0" aria-label="seconds">
+        </div>
+        <div id="controls">
+            <button id="btn_start">start</button>
+            <button id="btn_pause" disabled>pause</button>
+            <button id="btn_stop" disabled>stop</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('noise_texture');
+        const ctx = canvas.getContext('2d');
+        const scale = 2;
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth/scale;
+          canvas.height = window.innerHeight/scale;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function generateNoise() {
+          const imgData = ctx.createImageData(canvas.width, canvas.height);
+          const data = imgData.data;
+        
+          for (let i = 0; i < data.length; i += 4) {
+            data[i]     = Math.floor(Math.random() * 255);  // red
+            data[i + 1] = Math.floor(Math.random() * 255);  // green
+            data[i + 2] = Math.floor(Math.random() * 255);  // blue
+            data[i + 3] = 100;                              // alpha
+          }
+
+          ctx.putImageData(imgData, 0, 0);
+          setTimeout(() => {
+            requestAnimationFrame(generateNoise);
+          }, 10);
+        }
+
+        generateNoise();
+
+
+        function copyToClipboard(text) {
+			const el = document.createElement('textarea');
+			el.value = text;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+		}
+
+        (() => {
+            const root = document.documentElement;
+            const BG = 'images/bg5.jpg';
+
+            // peak positions as FRACTIONS of the bg image (0-1)
+            const PEAKS = [
+                { x: 0.265, y: 0.409 }, // far left
+                { x: 0.329, y: 0.456 }, // small far left
+
+                { x: 0.431, y: 0.406 }, // center
+                { x: 0.553, y: 0.481 }, // small peak center
+                
+                { x: 0.703, y: 0.393 }, // small peak right
+                { x: 0.726, y: 0.385 }, // right
+                { x: 0.813, y: 0.444 }, // far right
+            ];
+
+            const CAMPS = [
+                { x: 0.264, y: 0.817, peaks: [0, 1, 2] }, // left hump
+                { x: 0.431, y: 0.966, peaks: [0, 1, 2, 3] }, // valley
+                { x: 0.694, y: 0.642, peaks: [4, 5, 6] }, // house
+            ];
+
+            const rand = (a, b) => a + Math.random() * (b - a);
+
+            // 0 = sharp zig-zag, 1 = fully smooth curves
+            // tip: test live with  yoursite.com/?smooth=0.6
+            const q = parseFloat(new URLSearchParams(location.search).get('smooth'));
+            const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.5;
+
+            let revealed = false;
+            function reveal() {
+                if (revealed) return;
+                revealed = true;
+                root.classList.remove('preload');
+                root.classList.add('loaded');
+            }
+
+            // map an image-fraction to screen px, matching background-size: cover
+            function toScreen(p, iw, ih) {
+                const vw = innerWidth, vh = innerHeight;
+                const s = Math.max(vw / iw, vh / ih);
+                return {
+                    x: (vw - iw * s) / 2 + p.x * iw * s,
+                    y: (vh - ih * s) / 2 + p.y * ih * s,
+                };
+            }
+        
+            // jagged path: many waypoints, hard corners, jitter tapers off near the peak
+            function buildPath(a, b) {
+                const n = 16;
+                const spread = 0.09;
+                const dx = b.x - a.x, dy = b.y - a.y;
+                const len = Math.hypot(dx, dy);
+                const nx = -dy / len, ny = dx / len;
+
+                const pts = [a];
+                for (let i = 1; i <= n; i++) {
+                    const t = i / (n + 1) + rand(-0.025, 0.025);
+                    const taper = 1 - Math.pow(t, 2);
+                    const j = rand(-1, 1) * len * spread * taper;
+                    pts.push({ x: a.x + dx * t + nx * j, y: a.y + dy * t + ny * j });
+                }
+                pts.push(b);
+            
+                const r = SMOOTHNESS * 0.5;
+                const lerp = (p, q, k) => ({ x: p.x + (q.x - p.x) * k, y: p.y + (q.y - p.y) * k });
+            
+                let d = `M ${a.x} ${a.y}`;
+                for (let i = 1; i < pts.length - 1; i++) {
+                    const p = pts[i];
+                    const s = lerp(p, pts[i - 1], r);
+                    const e = lerp(p, pts[i + 1], r);
+                    d += ` L ${s.x} ${s.y} Q ${p.x} ${p.y} ${e.x} ${e.y}`;
+                }
+                return d + ` L ${b.x} ${b.y}`;
+            }
+
+            // ---------- timer ----------
+            const $ = id => document.getElementById(id);
+            const svg = $('loader_svg'), trail = $('trail'), head = $('trail_head'),
+                  ring = $('peak_ring'), campsG = $('camps'),
+                  readout = $('time_readout'), setMin = $('set_min'), setSec = $('set_sec'),
+                  bStart = $('btn_start'), bPause = $('btn_pause'), bStop = $('btn_stop');
+
+            let iw = 0, ih = 0;
+            let duration = 240000;          // ms, default 4:00
+            let elapsed = 0;                // ms
+            let state = 'idle';             // idle | running | paused | done
+            let last = 0, raf = 0, total = 0, camp = null, peak = null;
+
+            const fmt = ms => {
+                const s = Math.ceil(ms / 1000);
+                return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+            };
+
+            function readTime() {
+                const m = Math.max(0, parseInt(setMin.value, 10) || 0);
+                const s = Math.min(59, Math.max(0, parseInt(setSec.value, 10) || 0));
+                duration = Math.max(1000, (m * 60 + s) * 1000);
+            }
+
+            // pick a random camp + peak and lay the trail out, fully hidden
+            function setupRoute() {
+                svg.setAttribute('viewBox', `0 0 ${innerWidth} ${innerHeight}`);
+
+                const campDef = CAMPS[Math.floor(Math.random() * CAMPS.length)];
+                const peakDef = PEAKS[campDef.peaks[Math.floor(Math.random() * campDef.peaks.length)]];
+                camp = toScreen(campDef, iw, ih);
+                peak = toScreen(peakDef, iw, ih);
+                trail.setAttribute('d', buildPath(camp, peak));
+
+                campsG.innerHTML = '';
+                CAMPS.forEach(c => {
+                    const p = toScreen(c, iw, ih);
+                    const el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    el.setAttribute('x', p.x - 4);
+                    el.setAttribute('y', p.y - 4);
+                    el.setAttribute('width', 8);
+                    el.setAttribute('height', 8);
+                    el.setAttribute('class', 'camp' + (p.x === camp.x && p.y === camp.y ? ' active' : ''));
+                    campsG.appendChild(el);
+                });
+
+                total = trail.getTotalLength();
+                trail.style.strokeDasharray = total;
+            }
+
+            function draw() {
+                const p = Math.min(elapsed / duration, 1);   // linear so the dot matches the clock
+                trail.style.strokeDashoffset = total * (1 - p);
+                const pt = trail.getPointAtLength(total * p);
+                head.setAttribute('cx', pt.x);
+                head.setAttribute('cy', pt.y);
+                const t = fmt(duration - elapsed);
+                readout.textContent = t;
+                document.title = 'ax1tl.home';
+            }
+
+            function updateUI() {
+                bStart.textContent = state === 'paused' ? 'resume' : 'start';
+                bStart.disabled = state === 'running';
+                bPause.disabled = state !== 'running';
+                bStop.disabled = state === 'idle';
+                setMin.disabled = setSec.disabled = state === 'running' || state === 'paused';
+            }
+
+            function tick(now) {
+                elapsed += now - last;
+                last = now;
+                if (elapsed >= duration) return finish();
+                draw();
+                raf = requestAnimationFrame(tick);
+            }
+
+            function start() {
+                if (state === 'running') return;
+                if (state === 'done') stop();
+                if (state === 'idle') { readTime(); elapsed = 0; }
+                state = 'running';
+                last = performance.now();
+                raf = requestAnimationFrame(tick);
+                updateUI();
+            }
+
+            function pause() {
+                if (state !== 'running') return;
+                cancelAnimationFrame(raf);
+                state = 'paused';
+                draw();
+                updateUI();
+            }
+
+            function stop() {
+                cancelAnimationFrame(raf);
+                state = 'idle';
+                elapsed = 0;
+                ring.classList.remove('ping');
+                readTime();
+                setupRoute();      // new random hike each reset
+                draw();
+                updateUI();
+            }
+
+            function finish() {
+                cancelAnimationFrame(raf);
+                state = 'done';
+                elapsed = duration;
+                draw();
+                ring.setAttribute('cx', peak.x);
+                ring.setAttribute('cy', peak.y);
+                ring.classList.add('ping');
+                                updateUI();
+            }
+
+            bStart.addEventListener('click', start);
+            bPause.addEventListener('click', pause);
+            bStop.addEventListener('click', stop);
+
+            // changing the time while idle/done updates the readout
+            [setMin, setSec].forEach(el => el.addEventListener('input', () => {
+                if (state === 'done') stop();
+                if (state !== 'idle') return;
+                readTime();
+                draw();
+            }));
+
+            const img = new Image();
+            img.onload = () => {
+                iw = img.naturalWidth; ih = img.naturalHeight;
+                setupRoute();
+                draw();
+                updateUI();
+                reveal();
+            };
+            img.onerror = reveal;
+            img.src = BG;
+        })();
+
+
+
+        addEventListener('click', e => {
+    const img = new Image(); img.src = 'images/bg5.jpg';
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const s = Math.max(innerWidth / iw, innerHeight / ih);
+    const x = (e.clientX - (innerWidth - iw * s) / 2) / (iw * s);
+    const y = (e.clientY - (innerHeight - ih * s) / 2) / (ih * s);
+    console.log({ x: +x.toFixed(3), y: +y.toFixed(3) });
+});
+    </script>
+    <div id="version">built with love - version 6.9.3</div>
+</html>
