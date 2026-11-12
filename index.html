@@ -22,7 +22,9 @@
         <!-- colurojkshfbsjdfgf -->
         <meta name="theme-color" content="#ff4422" />
     </head>
-    
+
+    <script>document.documentElement.classList.add('preload')</script>
+
     <div class="overlay">
         <img src="images/texture 3.jpg" id="grain_texture">
         <canvas id="noise_texture"></canvas>
@@ -35,14 +37,23 @@
         <img src="images/overlay7.png" class="hud_overlay" id="ol7">
     </div>
 
+    <div id="loader">
+        <svg id="loader_svg">
+            <path id="trail"/>
+            <circle id="trail_head" r="4"/>
+            <circle id="peak_ring" r="14"/>
+            <g id="camps"></g>
+        </svg>
+    </div>
+
     <body>
         <div class="inwrap">
-            <h1>
+            <h1 class="reveal" style="--i:0">
                 ax1tl<a href="https://ax1tl.online/starchild" id="online_tag">.online</a>
                 <div id="tagline">make something, create anything. art is human. </div>
             </h1>
             <div class="parent">
-                <div class="sidebar">
+                <div class="sidebar reveal" style="--i:1">
                     <p class="sb_header">:Purchase Music</p>
                     <div class="sb_link_container"><a href="https://ax1tl.bandcamp.com/follow_me" class="sb_link" target="_blank">Bandcamp</a></div>
                     <div class="sb_link_container"><a href="https://itunes.apple.com/us/artist/ax1tl/1675576860" class="sb_link" target="_blank">iTunes</a></div>
@@ -69,24 +80,25 @@
                     <div class="sb_link_container"><a href="https://ko-fi.com/ax1tl" class="sb_link" target="_blank">Ko-Fi</a></div>
                     <div class="sb_link_container"><a href="https://ax1tl.straw.page" class="sb_link" target="_blank">StrawPage</a></div>
                 </div>
-
-                <div class="main">
-                    <div class="main_parent">
-                        <div class="main_latest">
-                            <p class="m_header">:Latest</p>
-                            <iframe style="border-radius: 24px; border: 0; width: 100%; height: 344px;" src="https://bandcamp.com/EmbeddedPlayer/album=4034833641/size=large/bgcol=333333/linkcol=ffffff/artwork=small/transparent=true/" seamless><a href="https://ax1tl.bandcamp.com/album/wishyouwerehere">wishyouwerehere by ax1tl</a></iframe>
-                        </div>
-                        <div class="main_early">
-                            <p class="m_header">:Early Access</p>
-                            <iframe style="border-radius: 24px" src="https://untitled.stream/embed/jHwJ36digwIq" width="100%" height="344" allowFullScreen="" allow="picture-in-picture" frameborder="0" loading="lazy"></iframe>
+                <!--
+                    <div class="main reveal" style="--i:2"">
+                        <div class="main_parent">
+                            <div class="main_latest reveal" style="--i:2">
+                                <p class="m_header">:Latest</p>
+                                <iframe style="border-radius: 24px; border: 0; width: 100%; height: 344px;" src="https://bandcamp.com/EmbeddedPlayer/album=4034833641/size=large/bgcol=333333/linkcol=ffffff/artwork=small/transparent=true/" seamless><a href="https://ax1tl.bandcamp.com/album/wishyouwerehere">wishyouwerehere by ax1tl</a></iframe>
+                            </div>
+                            <div class="main_early reveal" style="--i:3">
+                                <p class="m_header">:Early Access</p>
+                                <iframe style="border-radius: 24px" src="https://untitled.stream/embed/jHwJ36digwIq" width="100%" height="344" allowFullScreen="" allow="picture-in-picture" frameborder="0" loading="lazy"></iframe>
+                            </div>
                         </div>
                     </div>
-                </div>
+                -->
             </div>
         </div>
     </body>
 
-    <div class="badge-container">
+    <div class="badge-container reveal" style="--i:4">
         <div class="badges">
             <a href="https://ax1tl.github.io/"><img src="88x31/88x31.png" alt="ax1tl"></a>
             <a href="https://ax1tl.github.io/"><img src="88x31/88x31 DARK.png" alt="ax1tl"></a>
@@ -145,6 +157,169 @@
 			document.execCommand('copy');
 			document.body.removeChild(el);
 		}
+
+        (() => {
+            const root = document.documentElement;
+            const BG = 'images/bg5.jpg';
+            const DURATION = 2600;
+
+            // peak positions as FRACTIONS of the bg image (0-1). Replace with your real ones!
+            const PEAKS = [
+                { x: 0.263, y: 0.407 }, // far left
+                { x: 0.323, y: 0.452 }, // small far left
+
+                { x: 0.431, y: 0.404 }, // center
+                { x: 0.553, y: 0.481 }, // small peak center
+                
+                { x: 0.703, y: 0.393 }, // small peak right
+                { x: 0.726, y: 0.385 }, // right
+                { x: 0.813, y: 0.444 }, // far right
+            ];
+
+            const CAMPS = [
+                { x: 0.264, y: 0.817, peaks: [0, 1, 2] }, // left hump
+                { x: 0.431, y: 0.966, peaks: [0, 1, 2, 3] }, // valley
+                { x: 0.694, y: 0.642, peaks: [4, 5, 6] }, // house
+            ];
+
+            const rand = (a, b) => a + Math.random() * (b - a);
+            const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+            // 0 = sharp zig-zag, 1 = fully smooth curves
+            // tip: test live with  yoursite.com/?smooth=0.6
+            const q = parseFloat(new URLSearchParams(location.search).get('smooth'));
+            const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.35;
+
+            let revealed = false;
+            function reveal() {
+                if (revealed) return;
+                revealed = true;
+                root.classList.remove('preload');
+                root.classList.add('loaded');
+            }
+            setTimeout(reveal, 8000); // failsafe
+        
+            // map an image-fraction to screen px, matching background-size: cover
+            function toScreen(p, iw, ih) {
+                const vw = innerWidth, vh = innerHeight;
+                const s = Math.max(vw / iw, vh / ih);
+                return {
+                    x: (vw - iw * s) / 2 + p.x * iw * s,
+                    y: (vh - ih * s) / 2 + p.y * ih * s,
+                };
+            }
+        
+            // jagged path: many waypoints, hard corners, jitter tapers off near the peak
+            function buildPath(a, b) {
+                const n = 8;
+                const spread = 0.09;
+                const dx = b.x - a.x, dy = b.y - a.y;
+                const len = Math.hypot(dx, dy);
+                const nx = -dy / len, ny = dx / len;
+
+                // same jagged waypoints as before
+                const pts = [a];
+                for (let i = 1; i <= n; i++) {
+                    const t = i / (n + 1) + rand(-0.025, 0.025);
+                    const taper = 1 - Math.pow(t, 0.5);
+                    const j = rand(-1, 1) * len * spread * taper;
+                    pts.push({ x: a.x + dx * t + nx * j, y: a.y + dy * t + ny * j });
+                }
+                pts.push(b);
+            
+                // round each corner: how far along its neighboring segments the curve starts
+                // r = 0 -> sharp corner, r = 0.5 -> curve runs to the segment midpoints
+                const r = SMOOTHNESS * 0.5;
+                const lerp = (p, q, k) => ({ x: p.x + (q.x - p.x) * k, y: p.y + (q.y - p.y) * k });
+            
+                let d = `M ${a.x} ${a.y}`;
+                for (let i = 1; i < pts.length - 1; i++) {
+                    const p = pts[i];
+                    const s = lerp(p, pts[i - 1], r);
+                    const e = lerp(p, pts[i + 1], r);
+                    d += ` L ${s.x} ${s.y} Q ${p.x} ${p.y} ${e.x} ${e.y}`;
+                }
+                return d + ` L ${b.x} ${b.y}`;
+            }
+        
+            function run(iw, ih) {
+                const loader = document.getElementById('loader');
+                const svg = document.getElementById('loader_svg');
+                const trail = document.getElementById('trail');
+                const head = document.getElementById('trail_head');
+                const ring = document.getElementById('peak_ring');
+            
+                svg.setAttribute('viewBox', `0 0 ${innerWidth} ${innerHeight}`);
+            
+                const campDef = CAMPS[Math.floor(Math.random() * CAMPS.length)];
+                const peakDef = PEAKS[campDef.peaks[Math.floor(Math.random() * campDef.peaks.length)]];
+                            
+                const camp = toScreen(campDef, iw, ih);
+                const peak = toScreen(peakDef, iw, ih);
+                trail.setAttribute('d', buildPath(camp, peak));
+
+                const campsG = document.getElementById('camps');
+                const campPts = CAMPS.map(c => toScreen(c, iw, ih));
+                campPts.forEach(p => {
+                    const el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    el.setAttribute('x', p.x - 4);
+                    el.setAttribute('y', p.y - 4);
+                    el.setAttribute('width', 8);
+                    el.setAttribute('height', 8);
+                    el.setAttribute('class', 'camp' + (p.x === camp.x && p.y === camp.y ? ' active' : ''));
+                    campsG.appendChild(el);
+                });
+            
+                const total = trail.getTotalLength();
+                trail.style.strokeDasharray = total;
+                trail.style.strokeDashoffset = total;
+            
+                const t0 = performance.now();
+                function frame(now) {
+                    const t = Math.min((now - t0) / DURATION, 1);
+                    const e = ease(t);
+                    trail.style.strokeDashoffset = total * (1 - e);
+                    const p = trail.getPointAtLength(total * e);
+                    head.setAttribute('cx', p.x);
+                    head.setAttribute('cy', p.y);
+                
+                    if (t < 1) return requestAnimationFrame(frame);
+                
+                    // arrived
+                    ring.setAttribute('cx', peak.x);
+                    ring.setAttribute('cy', peak.y);
+                    ring.classList.add('ping');
+                    setTimeout(() => {
+                        loader.classList.add('done');
+                        reveal();
+                        setTimeout(() => loader.remove(), 900);
+                    }, 500);
+                }
+                requestAnimationFrame(frame);
+            }
+        
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.getElementById('loader').remove();
+                reveal();
+                return;
+            }
+        
+            const img = new Image();
+            img.onload = () => run(img.naturalWidth, img.naturalHeight);
+            img.onerror = reveal;
+            img.src = BG;
+        })();
+
+
+
+        addEventListener('click', e => {
+    const img = new Image(); img.src = 'images/bg5.jpg';
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const s = Math.max(innerWidth / iw, innerHeight / ih);
+    const x = (e.clientX - (innerWidth - iw * s) / 2) / (iw * s);
+    const y = (e.clientY - (innerHeight - ih * s) / 2) / (ih * s);
+    console.log({ x: +x.toFixed(3), y: +y.toFixed(3) });
+});
     </script>
-    <div id="version">built with love - version 6.8.2</div>
+    <div id="version">built with love - version 6.9.0</div>
 </html>
