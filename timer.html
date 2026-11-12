@@ -96,9 +96,9 @@
     </div>
 
     <div id="timer_ui">
-        <div id="time_readout">04:00</div>
+        <div id="time_readout">06:00</div>
         <div id="time_set">
-            <input id="set_min" type="number" min="0" max="999" value="4" aria-label="minutes">
+            <input id="set_min" type="number" min="0" max="999" value="6" aria-label="minutes">
             <span>:</span>
             <input id="set_sec" type="number" min="0" max="59" value="0" aria-label="seconds">
         </div>
@@ -178,7 +178,7 @@
             // 0 = sharp zig-zag, 1 = fully smooth curves
             // tip: test live with  yoursite.com/?smooth=0.6
             const q = parseFloat(new URLSearchParams(location.search).get('smooth'));
-            const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.5;
+            const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.35;
 
             let revealed = false;
             function reveal() {
