@@ -161,14 +161,14 @@
         (() => {
             const root = document.documentElement;
             const BG = 'images/bg5.jpg';
-            const DURATION = 2600;
+            const DURATION = 1500;
 
             // peak positions as FRACTIONS of the bg image (0-1). Replace with your real ones!
             const PEAKS = [
-                { x: 0.263, y: 0.407 }, // far left
-                { x: 0.323, y: 0.452 }, // small far left
+                { x: 0.265, y: 0.409 }, // far left
+                { x: 0.329, y: 0.456 }, // small far left
 
-                { x: 0.431, y: 0.404 }, // center
+                { x: 0.431, y: 0.406 }, // center
                 { x: 0.553, y: 0.481 }, // small peak center
                 
                 { x: 0.703, y: 0.393 }, // small peak right
@@ -188,7 +188,7 @@
             // 0 = sharp zig-zag, 1 = fully smooth curves
             // tip: test live with  yoursite.com/?smooth=0.6
             const q = parseFloat(new URLSearchParams(location.search).get('smooth'));
-            const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.35;
+            const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.5;
 
             let revealed = false;
             function reveal() {
@@ -197,7 +197,7 @@
                 root.classList.remove('preload');
                 root.classList.add('loaded');
             }
-            setTimeout(reveal, 8000); // failsafe
+            setTimeout(reveal, 4000); // failsafe
         
             // map an image-fraction to screen px, matching background-size: cover
             function toScreen(p, iw, ih) {
@@ -221,7 +221,7 @@
                 const pts = [a];
                 for (let i = 1; i <= n; i++) {
                     const t = i / (n + 1) + rand(-0.025, 0.025);
-                    const taper = 1 - Math.pow(t, 0.5);
+                    const taper = 1 - Math.pow(t, 2); // taper
                     const j = rand(-1, 1) * len * spread * taper;
                     pts.push({ x: a.x + dx * t + nx * j, y: a.y + dy * t + ny * j });
                 }
@@ -321,5 +321,5 @@
     console.log({ x: +x.toFixed(3), y: +y.toFixed(3) });
 });
     </script>
-    <div id="version">built with love - version 6.9.0</div>
+    <div id="version">built with love - version 6.9.2</div>
 </html>
