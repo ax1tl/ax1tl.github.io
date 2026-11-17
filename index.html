@@ -162,8 +162,9 @@
             const root = document.documentElement;
             const BG = 'images/bg5.jpg';
             const DURATION = 2400;
+            const COMPACT = matchMedia('(max-width: 930px)').matches;
 
-            // peak positions as FRACTIONS of the bg image (0-1). Replace with your real ones!
+            // peak positions as fractioons of the bg image (0-1).
             const PEAKS = [
                 { x: 0.265, y: 0.409 }, // far left
                 { x: 0.329, y: 0.456 }, // small far left
@@ -182,11 +183,14 @@
                 { x: 0.694, y: 0.642, peaks: [4, 5, 6] }, // house
             ];
 
+            // small centered trail (used when COMPACT): fractions of the mini box
+            const MINI_CAMPS = [{ x: 0.12, y: 0.95 }, { x: 0.50, y: 1.0 }, { x: 0.88, y: 0.95 }];
+            const MINI_PEAKS = [{ x: 0.20, y: 0.12 }, { x: 0.50, y: 0.0 }, { x: 0.80, y: 0.12 }];
+
             const rand = (a, b) => a + Math.random() * (b - a);
             const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
 
             // 0 = sharp zig-zag, 1 = fully smooth curves
-            // tip: test live with  yoursite.com/?smooth=0.6
             const q = parseFloat(new URLSearchParams(location.search).get('smooth'));
             const SMOOTHNESS = Number.isFinite(q) ? Math.min(1, Math.max(0, q)) : 0.5;
 
@@ -254,13 +258,31 @@
                 const campDef = CAMPS[Math.floor(Math.random() * CAMPS.length)];
                 const peakDef = PEAKS[campDef.peaks[Math.floor(Math.random() * campDef.peaks.length)]];
                             
-                const camp = toScreen(campDef, iw, ih);
-                const peak = toScreen(peakDef, iw, ih);
+                const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+                let camp, peak, campList;
+
+                if (COMPACT) {
+                    // small box centered on the screen
+                    const bw = Math.min(320, innerWidth * 0.7), bh = bw * 0.6;
+                    const ox = (innerWidth - bw) / 2, oy = (innerHeight - bh) / 2;
+                    const toBox = p => ({ x: ox + p.x * bw, y: oy + p.y * bh });
+                
+                    camp = toBox(pick(MINI_CAMPS));
+                    peak = toBox(pick(MINI_PEAKS));
+                    campList = MINI_CAMPS.map(toBox);
+                } else {
+                    // full-screen trail over the background image
+                    const campDef = pick(CAMPS);
+                    const peakDef = PEAKS[pick(campDef.peaks)];
+                    camp = toScreen(campDef, iw, ih);
+                    peak = toScreen(peakDef, iw, ih);
+                    campList = CAMPS.map(c => toScreen(c, iw, ih));
+                }
+
                 trail.setAttribute('d', buildPath(camp, peak));
 
                 const campsG = document.getElementById('camps');
-                const campPts = CAMPS.map(c => toScreen(c, iw, ih));
-                campPts.forEach(p => {
+                campList.forEach(p => {
                     const el = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                     el.setAttribute('x', p.x - 4);
                     el.setAttribute('y', p.y - 4);
@@ -269,6 +291,8 @@
                     el.setAttribute('class', 'camp' + (p.x === camp.x && p.y === camp.y ? ' active' : ''));
                     campsG.appendChild(el);
                 });
+
+                
             
                 const total = trail.getTotalLength();
                 trail.style.strokeDasharray = total;
@@ -321,5 +345,5 @@
     console.log({ x: +x.toFixed(3), y: +y.toFixed(3) });
 });
     </script>
-    <div id="version">built with love - version 6.9.3</div>
+    <div id="version">built with love - version 6.9.4</div>
 </html>
